@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lawrence&Partners – About Us</title>
+<link rel="icon" type="image/png" href="img/favicon.ico">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: #fff; color: #111; line-height: 1.6; }
+  a { text-decoration: none; color: inherit; }
+  img { max-width: 100%; height: auto; display: block; }
+
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,10,10,0.97); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  nav { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .logo { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.72); font-family: Arial, sans-serif; font-size: 0.8rem; transition: color 0.2s; padding-bottom: 2px; border-bottom: 2px solid transparent; }
+  .nav-links a:hover, .nav-links a.active { color: #fff; border-bottom-color: #c0392b; }
+  .nav-right { display: flex; align-items: center; gap: 0.5rem; }
+  .lang { font-family: Arial, sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.5); cursor: pointer; }
+  .lang.active { color: #fff; font-weight: 600; }
+  .lang-sep { color: rgba(255,255,255,0.25); font-size: 0.75rem; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: 0.5rem; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: all 0.3s; }
+  .mobile-menu { display: none; background: rgba(10,10,10,0.98); border-top: 1px solid rgba(255,255,255,0.08); padding: 1rem 2rem 1.5rem; }
+  .mobile-menu a { display: block; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.85); font-family: Arial, sans-serif; font-size: 0.95rem; }
+  .mobile-menu.open { display: block; }
+
+  .page-hero { position: relative; height: 340px; background: #0a0a0a; display: flex; align-items: flex-end; overflow: hidden; padding-top: 72px; }
+  .page-hero-bg { position: absolute; inset: 0; background-image: url('https://paksoy.av.tr/wp-content/uploads/2025/09/about-us.jpg'); background-size: cover; background-position: center 30%; opacity: 0.35; }
+  .page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.1) 100%); }
+  .page-hero-content { position: relative; z-index: 2; max-width: 1400px; width: 100%; margin: 0 auto; padding: 2rem 2rem 2.5rem; }
+  .breadcrumb { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.75rem; }
+  .breadcrumb a, .breadcrumb span { font-family: Arial, sans-serif; font-size: 0.72rem; color: rgba(255,255,255,0.5); }
+  .breadcrumb .current { color: rgba(255,255,255,0.8); }
+  .page-label { font-family: Arial, sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #c0392b; margin-bottom: 0.5rem; }
+  .page-title { font-family: Georgia, serif; font-size: 2.5rem; font-weight: 400; color: #fff; }
+
+  .sub-nav { background: #fff; border-bottom: 1px solid #e5e7eb; position: sticky; top: 72px; z-index: 100; }
+  .sub-nav-inner { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; }
+  .sub-nav-link { padding: 1rem 1.5rem; font-family: Arial, sans-serif; font-size: 0.8rem; color: #6b7280; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .sub-nav-link.active, .sub-nav-link:hover { color: #0a0a0a; border-bottom-color: #c0392b; }
+
+  .content { max-width: 1400px; margin: 0 auto; padding: 5rem 2rem; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .section-label { font-size: 0.65rem; font-family: Arial, sans-serif; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #c0392b; margin-bottom: 0.75rem; }
+  h2.h2 { font-family: Georgia, serif; font-size: 2rem; font-weight: 400; color: #0a0a0a; line-height: 1.3; margin-bottom: 1.5rem; }
+  .para { font-family: Arial, sans-serif; font-size: 0.88rem; color: #4b5563; line-height: 1.85; margin-bottom: 1.2rem; }
+  .img-full { width: 100%; height: 420px; object-fit: cover; }
+
+  .stats-band { background: #0a0a0a; padding: 4rem 2rem; }
+  .stats-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+  .stat h3 { font-family: Georgia, serif; font-size: 3rem; color: #c0392b; font-weight: 400; line-height: 1; margin-bottom: 0.5rem; }
+  .stat p { font-family: Arial, sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .values-section { background: #f8f8f8; padding: 5rem 2rem; }
+  .values-inner { max-width: 1400px; margin: 0 auto; }
+  .values-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; margin-top: 3rem; }
+  .value-card { background: #fff; padding: 2.5rem; border: 1px solid #e5e7eb; transition: border-color 0.2s; }
+  .value-card:hover { border-color: #c0392b; }
+  .value-card-bar { width: 32px; height: 3px; background: #c0392b; margin-bottom: 1.25rem; }
+  .value-card h3 { font-family: Georgia, serif; font-size: 1.1rem; color: #0a0a0a; margin-bottom: 0.75rem; }
+  .value-card p { font-family: Arial, sans-serif; font-size: 0.85rem; color: #6b7280; line-height: 1.75; }
+
+  .awards-section { max-width: 1400px; margin: 0 auto; padding: 5rem 2rem; }
+  .award-row { display: flex; align-items: center; padding: 1.25rem 0; border-bottom: 1px solid #f3f4f6; gap: 2rem; }
+  .award-year { font-family: Arial, sans-serif; font-size: 0.75rem; font-weight: 700; color: #c0392b; min-width: 50px; }
+  .award-name { font-family: Georgia, serif; font-size: 0.95rem; color: #111827; flex: 1; }
+  .award-cat { font-family: Arial, sans-serif; font-size: 0.75rem; color: #9ca3af; text-align: right; }
+
+  .two-col.center-align { align-items: center; }
+
+  .btn-red { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.75rem 1.75rem; background: #c0392b; border: none; font-family: Arial, sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; cursor: pointer; transition: background 0.2s; margin-top: 1rem; }
+  .btn-red:hover { background: #a93226; }
+
+  footer { background: #0a0a0a; color: rgba(255,255,255,0.7); padding: 4rem 0 2rem; border-top: 1px solid rgba(255,255,255,0.06); }
+  .footer-inner { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+  .footer-logo { font-family: Georgia, serif; font-size: 2rem; font-weight: 700; color: #c0392b; margin-bottom: 1.5rem; }
+  .footer-contact { font-family: Arial, sans-serif; font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 2rem; }
+  .footer-newsletter-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); font-family: Arial, sans-serif; margin-bottom: 1rem; }
+  .newsletter-form { display: flex; margin-bottom: 1rem; }
+  .newsletter-input { flex: 1; padding: 0.65rem 1rem; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-right: none; color: #fff; font-size: 0.8rem; font-family: Arial, sans-serif; outline: none; }
+  .newsletter-btn { padding: 0.65rem 1.25rem; background: #c0392b; border: none; color: #fff; font-size: 0.75rem; font-family: Arial, sans-serif; font-weight: 600; cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase; }
+  .footer-col h4 { font-size: 0.7rem; font-family: Arial, sans-serif; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.7rem; }
+  .footer-col ul li a { font-size: 0.82rem; font-family: Arial, sans-serif; color: rgba(255,255,255,0.6); transition: color 0.2s; }
+  .footer-col ul li a:hover { color: #fff; }
+  .footer-linkedin { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-size: 0.8rem; font-weight: 700; font-family: Arial, sans-serif; transition: background 0.2s; border-radius: 4px; }
+  .footer-linkedin:hover { background: #0a66c2; }
+  .footer-bottom { max-width: 1400px; margin: 2rem auto 0; padding: 1.5rem 2rem 0; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-bottom p { font-size: 0.72rem; font-family: Arial, sans-serif; color: rgba(255,255,255,0.3); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.72rem; font-family: Arial, sans-serif; color: rgba(255,255,255,0.3); transition: color 0.2s; }
+  .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+  @media(max-width:768px){ .nav-links{display:none;} .hamburger{display:flex;} .two-col{grid-template-columns:1fr;gap:2rem;} .stats-grid{grid-template-columns:repeat(2,1fr);} .values-grid{grid-template-columns:1fr;} .award-row{flex-direction:column;align-items:flex-start;gap:0.5rem;} .footer-inner{grid-template-columns:1fr 1fr;} }
+  @media(max-width:480px){
+    nav { padding: 0 1.25rem; } .logo { font-size: 1.3rem; }
+    .page-hero-content, .content, .values-inner, .awards-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .page-title { font-size: 1.8rem; } .h2 { font-size: 1.6rem; }
+    .stats-grid { grid-template-columns: 1fr; gap: 1.5rem; } .stat h3 { font-size: 2.2rem; }
+    .footer-inner{grid-template-columns:1fr; padding: 0 1.25rem;} }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="logo">Lawrence&Partners</a>
+    <ul class="nav-links">
+      <li><a href="about.html" class="active">About Us</a></li>
+      <li><a href="practices.html">Our Practices</a></li>
+      <li><a href="team.html">Team</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="career.html">Career</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="lang active">EN</span><span class="lang-sep">|</span><span class="lang">TR</span>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="about.html">About Us</a><a href="practices.html">Our Practices</a><a href="team.html">Team</a>
+    <a href="news.html">News</a><a href="publications.html">Publications</a><a href="events.html">Events</a>
+    <a href="career.html">Career</a><a href="contact.html">Contact</a>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span class="current">About Us</span></div>
+    <div class="page-label">About Us</div>
+    <h1 class="page-title">Lawrence&Partners</h1>
+  </div>
+</div>
+
+<div class="sub-nav">
+  <div class="sub-nav-inner">
+    <span class="sub-nav-link active">About Us</span>
+    <span class="sub-nav-link">Awards</span>
+    <span class="sub-nav-link">Giving Back</span>
+  </div>
+</div>
+
+<div class="content">
+  <div class="two-col">
+    <div>
+      <div class="section-label">Who We Are</div>
+      <h2 class="h2">An Istanbul-based independent Turkish law firm</h2>
+      <p class="para">Lawrence&Partners is an Istanbul-based independent Turkish law firm with over 130 employees, offering legal advice and counselling to foreign investors and the Turkish business community. We provide a wide range of services to meet the needs of local and international businesses in almost every field, including corporate law, capital markets, mergers and acquisitions, competition law, banking and finance, tax, real estate and project development, project finance, energy and infrastructure, litigation and arbitration.</p>
+      <p class="para">Founded in 1997 by Serdar Lawrence, the firm was established with a commitment to providing result-oriented, creative, innovative, fast and high quality legal advice to the local and international businesses at international standards.</p>
+    </div>
+    <div>
+      <img class="img-full" src="https://paksoy.av.tr/wp-content/uploads/2025/09/about-us-02.webp" alt="Paksoy Office" onerror="this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80'">
+    </div>
+  </div>
+</div>
+
+<div class="stats-band">
+  <div class="stats-grid">
+    <div class="stat"><h3>25+</h3><p>Years of Experience</p></div>
+    <div class="stat"><h3>130+</h3><p>Dedicated People</p></div>
+    <div class="stat"><h3>20+</h3><p>Practice Areas</p></div>
+    <div class="stat"><h3>1997</h3><p>Year Founded</p></div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="two-col" style="align-items:center;">
+    <div>
+      <img class="img-full" src="https://paksoy.av.tr/wp-content/uploads/2025/09/about-us-03-uai-2325x1550.webp" alt="Paksoy Team" onerror="this.src='https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80'">
+    </div>
+    <div>
+      <div class="section-label">Our Foundation and Vision</div>
+      <h2 class="h2">Committed to result-oriented legal excellence</h2>
+      <p class="para">Since its establishment, Lawrence&Partners has embraced a commitment to being a pioneer in the sector, delivering swift results and ensuring client satisfaction. Lawrence&Partners is a trusted and respected law firm known for its professionalism and ethical values.</p>
+      <p class="para">We provide high-quality, innovative legal solutions and prioritise client satisfaction with result-oriented, time-efficient attorney work products. We are committed to the continuous development and training of our employees, ensuring top-notch expertise and service.</p>
+      <a href="contact.html" class="btn-red">Contact Us &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<div class="values-section">
+  <div class="values-inner">
+    <div class="section-label">Our Culture</div>
+    <h2 class="h2">One Culture</h2>
+    <div class="values-grid">
+      <div class="value-card"><div class="value-card-bar"></div><h3>Client-Focused Solution</h3><p>We prioritize understanding each client's unique needs and delivering tailored legal strategies that achieve measurable results.</p></div>
+      <div class="value-card"><div class="value-card-bar"></div><h3>Innovative Excellence</h3><p>We combine deep legal expertise with creative thinking, offering solutions that go beyond conventional approaches.</p></div>
+      <div class="value-card"><div class="value-card-bar"></div><h3>Ethical Integrity</h3><p>Our reputation is built on unwavering ethical standards, transparency, and a commitment to professionalism in every matter.</p></div>
+      <div class="value-card"><div class="value-card-bar"></div><h3>Global Perspective</h3><p>With our international reach and cross-border expertise, we navigate complex multi-jurisdictional matters with confidence.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="awards-section">
+  <div class="section-label">Recognition</div>
+  <h2 class="h2">Awards &amp; Rankings</h2>
+  <div style="margin-top:2rem;">
+    <div class="award-row"><span class="award-year">2024</span><span class="award-name">Chambers Europe – Top Ranked in Turkey</span><span class="award-cat">Multiple Practice Areas</span></div>
+    <div class="award-row"><span class="award-year">2024</span><span class="award-name">The Legal 500 – Leading Firm</span><span class="award-cat">Corporate and M&amp;A</span></div>
+    <div class="award-row"><span class="award-year">2023</span><span class="award-name">IFLR1000 – Highly Regarded</span><span class="award-cat">Banking and Finance</span></div>
+    <div class="award-row"><span class="award-year">2023</span><span class="award-name">Who's Who Legal – Recommended Firm</span><span class="award-cat">Competition Law</span></div>
+    <div class="award-row"><span class="award-year">2022</span><span class="award-name">Legal Awards Turkey – Law Firm of the Year</span><span class="award-cat">M&amp;A</span></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Lawrence&Partners</div>
+      <p class="footer-newsletter-label">Sign up for our newsletter</p>
+      <form class="newsletter-form" onsubmit="return false;"><input class="newsletter-input" type="email" placeholder="Email address"><button class="newsletter-btn" type="button">Subscribe</button></form>
+    </div>
+    <div class="footer-col"><h4>Explore Our Firm</h4><ul><li><a href="about.html">› About Us</a></li><li><a href="practices.html">› Our Practices</a></li><li><a href="team.html">› Team</a></li><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li><li><a href="career.html">› Career</a></li><li><a href="contact.html">› Contact</a></li></ul></div>
+    <div class="footer-col"><h4>News &amp; Publications</h4><ul><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li></ul></div>
+    <div class="footer-col"><h4>Follow Us</h4><div style="display:flex; gap:0.5rem; flex-wrap:wrap;"><a href="https://www.linkedin.com/company/paksoy-law-firm/" target="_blank" class="footer-linkedin">in</a><a href="#" class="footer-linkedin">X</a><a href="#" class="footer-linkedin">ig</a></div></div>
+  </div>
+  <div class="footer-bottom"><p>&copy; 2026 Lawrence&Partners. All rights reserved.</p><div class="footer-links"><a href="terms.html#privacy">Privacy Policy</a><a href="terms.html#cookies">Cookie Policy</a><a href="terms.html#terms">Terms of Use</a></div></div>
+</footer>
+
+<div id="cookieBanner" style="position:fixed;bottom:0;width:100%;background:#0a0a0a;color:#fff;padding:12px;text-align:center;z-index:9999;border-top:1px solid rgba(255,255,255,0.1);display:none;font-family:Arial,sans-serif;font-size:0.85rem;">
+  This website uses cookies to improve your experience.
+  <button onclick="acceptCookies()" style="margin-left:10px;padding:6px 16px;background:#c0392b;border:none;color:#fff;font-family:Arial,sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;text-transform:uppercase;">Accept</button>
+  <button onclick="declineCookies()" style="margin-left:5px;padding:6px 16px;background:#333;border:none;color:#fff;font-family:Arial,sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;text-transform:uppercase;">Decline</button>
+</div>
+
+<script>
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', function() {
+    mobileMenu.classList.toggle('open');
+    var spans = hamburger.querySelectorAll('span');
+    var open = mobileMenu.classList.contains('open');
+    spans[0].style.transform = open ? 'rotate(45deg) translate(5px,5px)' : '';
+    spans[1].style.opacity = open ? '0' : '';
+    spans[2].style.transform = open ? 'rotate(-45deg) translate(5px,-5px)' : '';
+  });
+
+  var langs = document.querySelectorAll('.lang');
+  var savedLang = localStorage.getItem('selectedLanguage');
+  if (savedLang) {
+    langs.forEach(function(l) {
+      l.classList.remove('active');
+      if (l.textContent === savedLang) l.classList.add('active');
+    });
+  }
+  langs.forEach(function(lang) {
+    lang.addEventListener('click', function() {
+      langs.forEach(function(l) { l.classList.remove('active'); });
+      this.classList.add('active');
+      localStorage.setItem('selectedLanguage', this.textContent);
+    });
+  });
+
+  function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
+
+  function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i].trim();
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+    }
+    return null;
+  }
+
+  function acceptCookies() {
+    setCookie("cookieConsent", "accepted", 365);
+    document.getElementById("cookieBanner").style.display = "none";
+    // load analytics here
+  }
+
+  function declineCookies() {
+    setCookie("cookieConsent", "declined", 365);
+    document.getElementById("cookieBanner").style.display = "none";
+  }
+
+  if (getCookie("cookieConsent")) {
+    document.getElementById("cookieBanner").style.display = "none";
+    if (getCookie("cookieConsent") === "accepted") { /* load analytics here */ }
+  } else {
+    document.getElementById("cookieBanner").style.display = "block";
+  }
+</script>
+</body>
+</html>

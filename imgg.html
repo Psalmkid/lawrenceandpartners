@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Team</title>
+<title>Lawrence&Partners – Team</title>
+<link rel="icon" type="image/png" href="img/favicon.ico">
+
+<style>
+body {
+    margin: 0;
+    background: #0b0f1a;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.team {
+    padding: 60px 5%;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    text-decoration: none;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+}
+
+.img-box {
+    width: 100%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #111;
+}
+
+.img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.card:hover img {
+    transform: scale(1.05);
+}
+
+.info {
+    margin-top: 10px;
+}
+
+.info h3 {
+    font-size: 14px;
+    margin: 0;
+}
+
+.info p {
+    font-size: 12px;
+    opacity: 0.6;
+    margin: 4px 0 0;
+}
+@media(max-width:480px){ .team { padding: 40px 1.25rem; } .team-grid { gap: 15px; } }
+</style>
+</head>
+
+<body>
+
+<section class="team">
+    <div class="team-grid" id="teamGrid"></div>
+</section>
+
+<div id="cookieBanner" style="position:fixed;bottom:0;width:100%;background:#0a0a0a;color:#fff;padding:12px;text-align:center;z-index:9999;border-top:1px solid rgba(255,255,255,0.1);display:none;font-family:Arial,sans-serif;font-size:0.85rem;">
+  This website uses cookies to improve your experience.
+  <button onclick="acceptCookies()" style="margin-left:10px;padding:6px 16px;background:#c0392b;border:none;color:#fff;font-family:Arial,sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;text-transform:uppercase;">Accept</button>
+  <button onclick="declineCookies()" style="margin-left:5px;padding:6px 16px;background:#333;border:none;color:#fff;font-family:Arial,sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;text-transform:uppercase;">Decline</button>
+</div>
+
+<script>
+const images = [
+"https://paksoy.av.tr/wp-content/uploads/2025/07/SP-avatar.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/07/elvan-aziz.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/togan-turan-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/02/Stephanie_Beghe_Sonmez_1200x1200.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/07/Sera-Somay-son.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/omer-collak-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/07/nihan-bacanak.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/07/nazli-bezirci.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/07/simel-sarialioglu.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/07/sansal-erbacioglu.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/07/okkes-sahan.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/07/serdar-illdirar.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/09/Ayse-Demirel-Atakan.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/gulce-saydam-pehlivan-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/doguhan-uygun-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/zekican-samli-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/07/Gulcin-Dere-son.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/onur-celiker-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/zeynep-toma-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/emre-kotil-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/beril-paksoy-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/merve-kurdak-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/sabri-kaya-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/asli-eryilmaz-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/yavuz-sahin-sen-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/yeseren-sozuer-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/melisa-sevinc-atilganer-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/10/Pinar-Babaoglu.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/gamze-boran-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/09/Avatar-Firat-Egrilmez-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/deniz-benli-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/deniz-baytekin-uslu-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/mert-karakaslar-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/melis-gencol-ince-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/mete-siber-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/01/PL-Meric-Sacak-1200-px.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/05/PL-Canay-Palak-1200x1200-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/ali-batuhan-sevinc-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/osman-pepeoglu-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/bulent-ozturk-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/beritan-arik-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/goktug-selvitopu-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/08/Lale-Ayrancioglu-1200x1200-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/selen-toma-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/pinar-noberi-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/bengisu-babalik-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/sabiha-ulusoy-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/muhammed-tosun-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/sibel-postacioglu-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/08/PL-Onur-Berke-Okur.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/09/Mine-Hazal-Senol.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/12/barkin-demiray-avatar.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/ogulcan-halebak-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/08/PL-Sabahattin-Oztemiz.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/03/ayse-anaeli-avatar.png",
+"https://paksoy.av.tr/wp-content/uploads/2025/05/Mustafa-Karadas.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/10/Asli-Su-Coruk-1200x1200-2.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/11/irem-deyneli.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/02/eren-bespinar-avatar.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/07/fulya-tacer-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/husna-cilova-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/sena-sasani-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/irem-sabuncu-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/doga-pinarli-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/07/serra-yildirim-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/lara-akca-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/11/Berrak-Cosar-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/01/mehmet-muezzinoglu-avatar-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/10/Zeynep-Orta-1200x1200-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/11/Miray-Tezcan-avatar.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/07/deniz-ozmen-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/oguzhan-karaomeroglu-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/cansin-taner-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/tuna-citir-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/ceren-ozkorkut-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/elif-kaya-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/06/naz-dulgeroglu-portrait.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/12/Aysegul-Avci-1200x1200-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/08/Ece-Ulusoy-Avatar.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2026/04/umay-temeltas-avatar.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/09/Enes-Bayram-1200x1200-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/09/Emre-Acikgoz.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2026/02/PL-Mete-Erdogan.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/09/Idil-Akhan-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/04/Batuhan-Suslu-1200x1200-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/09/Ege-Bekar-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/02/zeynep-kilinc-avatarr.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2024/09/Zuhre-Acar.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/05/Can-Ergul-avatar.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/09/Esra-Sinim-1200x1200-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/10/Turkan-Tayuk-1200x1200-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/10/Elif-Algul-1200x1200-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/10/Serra-Yildirim-1200x1200-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/10/Zeynep-Erbul-1200x1200-1.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/12/elif-keser-avatar.jpg",
+"https://paksoy.av.tr/wp-content/uploads/2025/10/Baris-Yayci-1200x1200-1.jpg",
+];
+
+const container = document.getElementById("teamGrid");
+
+function cleanName(url) {
+    let name = url.split("/").pop();
+    name = name.replace(/\.[^/.]+$/, "");
+    name = name.replace(/[-_]/g, " ");
+    name = name.replace(/\b\w/g, l => l.toUpperCase());
+    return name;
+}
+
+images.forEach(src => {
+    const name = cleanName(src);
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+        <div class="img-box">
+            <img src="${src}" alt="${name}">
+        </div>
+        <div class="info">
+            <h3>${name}</h3>
+            <p>Team Member</p>
+        </div>
+    `;
+
+    container.appendChild(card);
+});
+
+function setCookie(name, value, days) {
+  var expires = "";
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i].trim();
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+  }
+  return null;
+}
+
+function acceptCookies() {
+  setCookie("cookieConsent", "accepted", 365);
+  document.getElementById("cookieBanner").style.display = "none";
+  // load analytics here
+}
+
+function declineCookies() {
+  setCookie("cookieConsent", "declined", 365);
+  document.getElementById("cookieBanner").style.display = "none";
+}
+
+if (getCookie("cookieConsent")) {
+  document.getElementById("cookieBanner").style.display = "none";
+  if (getCookie("cookieConsent") === "accepted") { /* load analytics here */ }
+} else {
+  document.getElementById("cookieBanner").style.display = "block";
+}
+</script>
+</body>
+</html>

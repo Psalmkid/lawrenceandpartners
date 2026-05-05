@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lawrence&Partners – Team</title>
+<link rel="icon" type="image/png" href="img/favicon.ico">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: #fff; color: #111; line-height: 1.6; }
+  a { text-decoration: none; color: inherit; }
+  img { max-width: 100%; height: auto; display: block; }
+
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,10,10,0.97); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  nav { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .logo { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.72); font-family: Arial, sans-serif; font-size: 0.8rem; transition: color 0.2s; padding-bottom: 2px; border-bottom: 2px solid transparent; }
+  .nav-links a:hover, .nav-links a.active { color: #fff; border-bottom-color: #c0392b; }
+  .nav-right { display: flex; align-items: center; gap: 0.5rem; }
+  .lang { font-family: Arial, sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.5); cursor: pointer; }
+  .lang.active { color: #fff; font-weight: 600; }
+  .lang-sep { color: rgba(255,255,255,0.25); font-size: 0.75rem; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: 0.5rem; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: all 0.3s; }
+  .mobile-menu { display: none; background: rgba(10,10,10,0.98); border-top: 1px solid rgba(255,255,255,0.08); padding: 1rem 2rem 1.5rem; }
+  .mobile-menu a { display: block; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.85); font-family: Arial, sans-serif; font-size: 0.95rem; }
+  .mobile-menu.open { display: block; }
+
+  .page-hero { position: relative; height: 300px; background: #0a0a0a; display: flex; align-items: flex-end; overflow: hidden; }
+  .page-hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #1a2233 0%, #0a0a0a 100%); }
+  .page-hero-content { position: relative; z-index: 2; max-width: 1400px; width: 100%; margin: 0 auto; padding: 2rem 2rem 2.5rem; }
+  .page-label { font-family: Arial, sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #c0392b; margin-bottom: 0.5rem; }
+  .page-title { font-family: Georgia, serif; font-size: 2.2rem; font-weight: 400; color: #fff; margin-bottom: 0.5rem; }
+  .page-subtitle { font-family: Arial, sans-serif; font-size: 0.85rem; color: rgba(255,255,255,0.55); max-width: 600px; line-height: 1.6; }
+
+  .filters-bar { background: #f8f8f8; border-bottom: 1px solid #e5e7eb; padding: 1.25rem 2rem; position: sticky; top: 72px; z-index: 100; }
+  .filters-inner { max-width: 1400px; margin: 0 auto; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  .filter-select { padding: 0.5rem 1rem; border: 1px solid #d1d5db; background: #fff; font-family: Arial, sans-serif; font-size: 0.8rem; color: #374151; outline: none; cursor: pointer; min-width: 180px; }
+  .filter-select:focus { border-color: #c0392b; }
+  .search-input { padding: 0.5rem 1rem; border: 1px solid #d1d5db; background: #fff; font-family: Arial, sans-serif; font-size: 0.8rem; color: #374151; outline: none; flex: 1; min-width: 200px; }
+  .search-input:focus { border-color: #c0392b; }
+  .clear-btn { padding: 0.5rem 1rem; background: none; border: 1px solid #d1d5db; font-family: Arial, sans-serif; font-size: 0.78rem; color: #6b7280; cursor: pointer; }
+  .clear-btn:hover { border-color: #c0392b; color: #c0392b; }
+
+  .team-section { max-width: 1400px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+  .results-count { font-family: Arial, sans-serif; font-size: 0.8rem; color: #9ca3af; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #0a0a0a; }
+  .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .team-card { border-bottom: 1px solid #f3f4f6; border-right: 1px solid #f3f4f6; padding: 2rem 1.5rem; cursor: pointer; transition: background 0.2s; text-align: center; }
+  .team-card:hover { background: #f9fafb; }
+  .team-card img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin: 0 auto 1rem; border: 3px solid #f3f4f6; transition: border-color 0.2s; }
+  .team-card:hover img { border-color: #c0392b; }
+  .team-card-name { font-family: Georgia, serif; font-size: 0.95rem; color: #111827; margin-bottom: 0.25rem; display: inline-block; }
+  .team-card-title { font-family: Arial, sans-serif; font-size: 0.72rem; color: #c0392b; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+  .team-card-practices { display: flex; flex-wrap: wrap; gap: 0.25rem; justify-content: center; margin-top: 0.5rem; }
+  .practice-tag { font-family: Arial, sans-serif; font-size: 0.65rem; color: #6b7280; background: #f3f4f6; padding: 0.15rem 0.5rem; border-radius: 2px; }
+  .no-results { text-align: center; padding: 4rem 2rem; font-family: Arial, sans-serif; color: #9ca3af; }
+
+  footer { background: #0a0a0a; color: rgba(255,255,255,0.7); padding: 4rem 0 2rem; border-top: 1px solid rgba(255,255,255,0.06); }
+  .footer-inner { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+  .footer-logo { font-family: Georgia, serif; font-size: 2rem; font-weight: 700; color: #c0392b; margin-bottom: 1.5rem; }
+  .footer-contact { font-family: Arial, sans-serif; font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 2rem; }
+  .footer-newsletter-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); font-family: Arial, sans-serif; margin-bottom: 1rem; }
+  .newsletter-form { display: flex; }
+  .newsletter-input { flex: 1; padding: 0.65rem 1rem; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-right: none; color: #fff; font-size: 0.8rem; font-family: Arial, sans-serif; outline: none; }
+  .newsletter-btn { padding: 0.65rem 1.25rem; background: #c0392b; border: none; color: #fff; font-size: 0.75rem; font-family: Arial, sans-serif; font-weight: 600; cursor: pointer; }
+  .footer-col h4 { font-size: 0.7rem; font-family: Arial, sans-serif; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.7rem; }
+  .footer-col ul li a { font-size: 0.82rem; font-family: Arial, sans-serif; color: rgba(255,255,255,0.6); }
+  .footer-col ul li a:hover { color: #fff; }
+  .footer-linkedin { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-size: 0.8rem; font-weight: 700; font-family: Arial, sans-serif; border-radius: 4px; }
+  .footer-linkedin:hover { background: #0a66c2; }
+  .footer-bottom { max-width: 1400px; margin: 2rem auto 0; padding: 1.5rem 2rem 0; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .footer-bottom p { font-size: 0.72rem; font-family: Arial, sans-serif; color: rgba(255,255,255,0.3); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.72rem; font-family: Arial, sans-serif; color: rgba(255,255,255,0.3); }
+
+  @media(max-width:1024px){ .team-grid{grid-template-columns:repeat(3,1fr);} }
+  @media(max-width:768px){ .nav-links{display:none;} .hamburger{display:flex;} .team-grid{grid-template-columns:repeat(2,1fr);} .footer-inner{grid-template-columns:1fr 1fr;} }
+  @media(max-width:480px){ .team-grid{grid-template-columns:1fr;} .footer-inner{grid-template-columns:1fr;} }
+  @media(max-width:480px){
+    nav { padding: 0 1.25rem; } .logo { font-size: 1.3rem; }
+    .page-hero-content, .team-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .page-title { font-size: 1.8rem; } .filters-bar { padding: 1rem; }
+    .filter-select, .search-input { min-width: 100%; }
+    .footer-inner{grid-template-columns:1fr; padding: 0 1.25rem;} }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="logo">Lawrence&Partners</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="practices.html">Our Practices</a></li>
+      <li><a href="team.html" class="active">Team</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="career.html">Career</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="lang active">EN</span><span class="lang-sep">|</span><span class="lang">TR</span>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="about.html">About Us</a><a href="practices.html">Our Practices</a><a href="team.html">Team</a>
+    <a href="news.html">News</a><a href="publications.html">Publications</a><a href="events.html">Events</a>
+    <a href="career.html">Career</a><a href="contact.html">Contact</a>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-content">
+    <div class="page-label">Team</div>
+    <h1 class="page-title">Meet the Lawrence&Partners Team</h1>
+    <p class="page-subtitle">Our team comprises over 130 dedicated professionals, including lawyers, specialists, counsel and support staff fully committed to delivering seamless service and solutions.</p>
+  </div>
+</div>
+
+<div class="filters-bar">
+  <div class="filters-inner">
+    <select class="filter-select" id="positionFilter">
+      <option value="">Position: All</option>
+      <option value="Founder &amp; Senior Partner">Founder &amp; Senior Partner</option>
+      <option value="Partner">Partner</option>
+      <option value="Counsel">Counsel</option>
+      <option value="Senior Associate">Senior Associate</option>
+      <option value="Associate">Associate</option>
+      <option value="Senior Tax Counsel">Senior Tax Counsel</option>
+      <option value="Legal Intern">Legal Intern</option>
+    </select>
+    <select class="filter-select" id="areaFilter">
+      <option value="">Practice: All</option>
+      <option value="Antitrust and Competition">Antitrust and Competition</option>
+      <option value="Banking and Finance">Banking and Finance</option>
+      <option value="Capital Markets">Capital Markets</option>
+      <option value="Corporate and Commercial">Corporate and Commercial</option>
+      <option value="Labour and Employment">Labour and Employment</option>
+      <option value="Mergers and Acquisitions">Mergers and Acquisitions</option>
+      <option value="Tax and Fiscal Services">Tax and Fiscal Services</option>
+    </select>
+    <input class="search-input" id="searchInput" type="text" placeholder="Search by name...">
+    <button class="clear-btn" id="clearBtn">Clear Filters</button>
+  </div>
+</div>
+
+<div class="team-section">
+  <div class="results-count" id="resultsCount"></div>
+  <div class="team-grid" id="teamGrid"></div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Lawrence&Partners</div>
+      <div class="footer-contact">
+        Orjin Maslak, No:27 K:11<br>
+        Maslak 34485, Istanbul, Türkiye<br>
+        T: +90 850 540 4079
+      </div>
+      <p class="footer-newsletter-label">Sign up for our newsletter</p>
+      <form class="newsletter-form" onsubmit="return false;"><input class="newsletter-input" type="email" placeholder="Email address"><button class="newsletter-btn">Subscribe</button></form>
+    </div>
+    <div class="footer-col"><h4>Explore Our Firm</h4><ul><li><a href="about.html">› About Us</a></li><li><a href="practices.html">› Our Practices</a></li><li><a href="team.html">› Team</a></li><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li><li><a href="career.html">› Career</a></li><li><a href="contact.html">› Contact</a></li></ul></div>
+    <div class="footer-col"><h4>News &amp; Publications</h4><ul><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li></ul></div>
+    <div class="footer-col"><h4>Follow Us</h4><div style="display:flex; gap:0.5rem; flex-wrap:wrap;"><a href="https://www.linkedin.com/company/paksoy-law-firm/" target="_blank" class="footer-linkedin">in</a><a href="#" class="footer-linkedin">X</a><a href="#" class="footer-linkedin">ig</a></div></div>
+  </div>
+  <div class="footer-bottom"><p>&copy; 2026 Lawrence&Partners. All rights reserved.</p><div class="footer-links"><a href="terms.html#privacy">Privacy Policy</a><a href="terms.html#cookies">Cookie Policy</a><a href="terms.html#terms">Terms of Use</a></div></div>
+</footer>
+
+<div id="cookieBanner" style="position:fixed;bottom:0;width:100%;background:#0a0a0a;color:#fff;padding:12px;text-align:center;z-index:9999;border-top:1px solid rgba(255,255,255,0.1);display:none;font-family:Arial,sans-serif;font-size:0.85rem;">
+  This website uses cookies to improve your experience.
+  <button onclick="acceptCookies()" style="margin-left:10px;padding:6px 16px;background:#c0392b;border:none;color:#fff;font-family:Arial,sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;text-transform:uppercase;">Accept</button>
+  <button onclick="declineCookies()" style="margin-left:5px;padding:6px 16px;background:#333;border:none;color:#fff;font-family:Arial,sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;text-transform:uppercase;">Decline</button>
+</div>
+
+<script>
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', function() {
+    mobileMenu.classList.toggle('open');
+    var spans = hamburger.querySelectorAll('span');
+    var open = mobileMenu.classList.contains('open');
+    spans[0].style.transform = open ? 'rotate(45deg) translate(5px,5px)' : '';
+    spans[1].style.opacity = open ? '0' : '';
+    spans[2].style.transform = open ? 'rotate(-45deg) translate(5px,-5px)' : '';
+  });
+
+  var images = [
+    "https://paksoy.av.tr/wp-content/uploads/2025/07/SP-avatar.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/07/elvan-aziz.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/togan-turan-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/02/Stephanie_Beghe_Sonmez_1200x1200.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/07/Sera-Somay-son.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/omer-collak-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/07/nihan-bacanak.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/07/nazli-bezirci.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/07/simel-sarialioglu.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/07/sansal-erbacioglu.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/07/okkes-sahan.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/07/serdar-illdirar.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/09/Ayse-Demirel-Atakan.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/gulce-saydam-pehlivan-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/doguhan-uygun-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/zekican-samli-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/07/Gulcin-Dere-son.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/onur-celiker-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/zeynep-toma-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/emre-kotil-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/beril-paksoy-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/merve-kurdak-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/sabri-kaya-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/asli-eryilmaz-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/yavuz-sahin-sen-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/yeseren-sozuer-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/melisa-sevinc-atilganer-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/10/Pinar-Babaoglu.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/gamze-boran-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/09/Avatar-Firat-Egrilmez-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/deniz-benli-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/deniz-baytekin-uslu-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/mert-karakaslar-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/melis-gencol-ince-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/mete-siber-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/01/PL-Meric-Sacak-1200-px.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/05/PL-Canay-Palak-1200x1200-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/ali-batuhan-sevinc-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/osman-pepeoglu-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/bulent-ozturk-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/beritan-arik-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/goktug-selvitopu-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/08/Lale-Ayrancioglu-1200x1200-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/selen-toma-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/pinar-noberi-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/bengisu-babalik-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/sabiha-ulusoy-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/muhammed-tosun-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/sibel-postacioglu-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/08/PL-Onur-Berke-Okur.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/09/Mine-Hazal-Senol.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/12/barkin-demiray-avatar.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/ogulcan-halebak-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/08/PL-Sabahattin-Oztemiz.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/03/ayse-anaeli-avatar.png",
+    "https://paksoy.av.tr/wp-content/uploads/2025/05/Mustafa-Karadas.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/10/Asli-Su-Coruk-1200x1200-2.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/11/irem-deyneli.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/02/eren-bespinar-avatar.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/07/fulya-tacer-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/husna-cilova-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/sena-sasani-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/irem-sabuncu-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/doga-pinarli-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/07/serra-yildirim-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/lara-akca-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/11/Berrak-Cosar-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/01/mehmet-muezzinoglu-avatar-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/10/Zeynep-Orta-1200x1200-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/11/Miray-Tezcan-avatar.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/07/deniz-ozmen-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/oguzhan-karaomeroglu-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/cansin-taner-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/tuna-citir-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/ceren-ozkorkut-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/elif-kaya-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/06/naz-dulgeroglu-portrait.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/12/Aysegul-Avci-1200x1200-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/08/Ece-Ulusoy-Avatar.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2026/04/umay-temeltas-avatar.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/09/Enes-Bayram-1200x1200-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/09/Emre-Acikgoz.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2026/02/PL-Mete-Erdogan.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/09/Idil-Akhan-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/04/Batuhan-Suslu-1200x1200-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/09/Ege-Bekar-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/02/zeynep-kilinc-avatarr.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2024/09/Zuhre-Acar.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/05/Can-Ergul-avatar.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/09/Esra-Sinim-1200x1200-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/10/Turkan-Tayuk-1200x1200-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/10/Elif-Algul-1200x1200-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/10/Serra-Yildirim-1200x1200-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/10/Zeynep-Erbul-1200x1200-1.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/12/elif-keser-avatar.jpg",
+    "https://paksoy.av.tr/wp-content/uploads/2025/10/Baris-Yayci-1200x1200-1.jpg"
+  ];
+
+  var positionBuckets = [
+    { title: 'Founder & Senior Partner', count: 1 },
+    { title: 'Partner', count: 15 },
+    { title: 'Counsel', count: 7 },
+    { title: 'Senior Associate', count: 17 },
+    { title: 'Associate', count: 43 },
+    { title: 'Senior Tax Counsel', count: 1 },
+    { title: 'Legal Intern', count: 12 }
+  ];
+
+  var practiceOptions = [
+    'Antitrust and Competition',
+    'Banking and Finance',
+    'Capital Markets',
+    'Corporate and Commercial',
+    'Labour and Employment',
+    'Mergers and Acquisitions',
+    'Tax and Fiscal Services'
+  ];
+
+  function cleanName(url) {
+    var name = url.split('/').pop();
+    name = name.replace(/\.[^/.]+$/, '');
+    name = name.replace(/^PL[-_]?/i, '');
+    name = name.replace(/[-_]+/g, ' ');
+    name = name.replace(/\b(avatar|portrait|son|photo|image|profile|headshot|foto|avatarr)\b/gi, '');
+    name = name.replace(/\b\d{3,4}(?:x\d{3,4})?\b/gi, '');
+    name = name.replace(/\b1\b/g, '');
+    name = name.replace(/\s+/g, ' ').trim();
+    return name.replace(/\b\w/g, function(letter) { return letter.toUpperCase(); });
+  }
+
+  function getPosition(index) {
+    var remaining = index;
+    for (var i = 0; i < positionBuckets.length; i++) {
+      if (remaining < positionBuckets[i].count) {
+        return positionBuckets[i].title;
+      }
+      remaining -= positionBuckets[i].count;
+    }
+    return 'Associate';
+  }
+
+  function getPractices(index) {
+    return [practiceOptions[index % practiceOptions.length]];
+  }
+
+  var savedNames = JSON.parse(localStorage.getItem('paksoy_team_names') || '{}');
+
+  var teamMembers = images.map(function(img, index) {
+    var id = 'member-' + index;
+    var defaultName = cleanName(img);
+    return {
+      id: id,
+      name: savedNames[id] || defaultName,
+      title: getPosition(index),
+      img: img,
+      practices: getPractices(index)
+    };
+  });
+
+  function renderTeam() {
+    var pos = document.getElementById('positionFilter').value;
+    var area = document.getElementById('areaFilter').value;
+    var search = document.getElementById('searchInput').value.toLowerCase();
+    var grid = document.getElementById('teamGrid');
+    var count = document.getElementById('resultsCount');
+
+    var filtered = teamMembers.filter(function(m) {
+      var matchPos = !pos || m.title === pos;
+      var matchArea = !area || m.practices.indexOf(area) > -1;
+      var matchSearch = !search || m.name.toLowerCase().indexOf(search) > -1;
+      return matchPos && matchArea && matchSearch;
+    });
+
+    count.textContent = filtered.length + ' professional' + (filtered.length !== 1 ? 's' : '');
+    grid.innerHTML = '';
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div class="no-results" style="grid-column:1/-1">No team members found matching your filters.</div>';
+      return;
+    }
+
+    filtered.forEach(function(m) {
+      var card = document.createElement('div');
+      card.className = 'team-card';
+      var tags = m.practices.map(function(p) { return '<span class="practice-tag">' + p + '</span>'; }).join('');
+      var initials = m.name.split(' ').map(function(n){ return n[0]; }).join('');
+      card.innerHTML = '<img src="' + m.img + '" alt="' + m.name + '" onerror="this.src=\'https://ui-avatars.com/api/?name=' + encodeURIComponent(m.name) + '&background=c0392b&color=fff&size=200\'">' +
+        '<div class="team-card-name" contenteditable="false" data-id="' + m.id + '">' + m.name + '</div>' +
+        '<div class="team-card-title">' + m.title + '</div>' +
+        '<div class="team-card-practices">' + tags + '</div>';
+      grid.appendChild(card);
+    });
+  }
+
+  document.getElementById('positionFilter').addEventListener('change', renderTeam);
+  document.getElementById('areaFilter').addEventListener('change', renderTeam);
+  document.getElementById('searchInput').addEventListener('input', renderTeam);
+  document.getElementById('clearBtn').addEventListener('click', function() {
+    document.getElementById('positionFilter').value = '';
+    document.getElementById('areaFilter').value = '';
+    document.getElementById('searchInput').value = '';
+    renderTeam();
+  });
+
+  var langs = document.querySelectorAll('.lang');
+  var savedLang = localStorage.getItem('selectedLanguage');
+  if (savedLang) {
+    langs.forEach(function(l) {
+      l.classList.remove('active');
+      if (l.textContent === savedLang) l.classList.add('active');
+    });
+  }
+  langs.forEach(function(lang) {
+    lang.addEventListener('click', function() {
+      langs.forEach(function(l) { l.classList.remove('active'); });
+      this.classList.add('active');
+      localStorage.setItem('selectedLanguage', this.textContent);
+    });
+  });
+
+  renderTeam();
+
+  function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
+
+  function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i].trim();
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+    }
+    return null;
+  }
+
+  function acceptCookies() {
+    setCookie("cookieConsent", "accepted", 365);
+    document.getElementById("cookieBanner").style.display = "none";
+    // load analytics here
+  }
+
+  function declineCookies() {
+    setCookie("cookieConsent", "declined", 365);
+    document.getElementById("cookieBanner").style.display = "none";
+  }
+
+  if (getCookie("cookieConsent")) {
+    document.getElementById("cookieBanner").style.display = "none";
+    if (getCookie("cookieConsent") === "accepted") { /* load analytics here */ }
+  } else {
+    document.getElementById("cookieBanner").style.display = "block";
+  }
+</script>
+</body>
+</html>
