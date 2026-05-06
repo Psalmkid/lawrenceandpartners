@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lawrence&Partners – Terms & Conditions</title>
+<link rel="icon" type="image/png" href="/assets/img/favicon.ico">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: #fff; color: #111; line-height: 1.6; }
+  a { text-decoration: none; color: inherit; }
+  
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,10,10,0.97); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  nav { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .logo { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.72); font-family: Arial, sans-serif; font-size: 0.8rem; transition: color 0.2s; padding-bottom: 2px; border-bottom: 2px solid transparent; }
+  .nav-links a:hover { color: #fff; border-bottom-color: #c0392b; }
+  .nav-right { display: flex; align-items: center; gap: 0.5rem; }
+  .lang { font-family: Arial, sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.5); cursor: pointer; }
+  .lang.active { color: #fff; font-weight: 600; }
+  .lang-sep { color: rgba(255,255,255,0.25); font-size: 0.75rem; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: 0.5rem; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: all 0.3s; }
+  .mobile-menu { display: none; background: rgba(10,10,10,0.98); border-top: 1px solid rgba(255,255,255,0.08); padding: 1rem 2rem 1.5rem; }
+  .mobile-menu a { display: block; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.85); font-family: Arial, sans-serif; font-size: 0.95rem; }
+  .mobile-menu.open { display: block; }
+
+  .page-hero { position: relative; height: 280px; background: #0a0a0a; display: flex; align-items: flex-end; overflow: hidden; }
+  .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80'); background-size: cover; background-position: center; opacity: 0.25; }
+  .page-hero-content { position: relative; z-index: 2; max-width: 1400px; width: 100%; margin: 0 auto; padding: 2rem 2rem 2.5rem; }
+  .page-label { font-family: Arial, sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #c0392b; margin-bottom: 0.5rem; }
+  .page-title { font-family: Georgia, serif; font-size: 2.2rem; font-weight: 400; color: #fff; }
+
+  .legal-content { max-width: 900px; margin: 0 auto; padding: 5rem 2rem; }
+  .legal-section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+  .legal-section h2 { font-family: Georgia, serif; font-size: 1.8rem; font-weight: 400; color: #0a0a0a; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; }
+  .legal-section h3 { font-family: Arial, sans-serif; font-size: 0.9rem; font-weight: 700; color: #111; margin: 1.5rem 0 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .legal-section p { font-family: Arial, sans-serif; font-size: 0.9rem; color: #4b5563; line-height: 1.8; margin-bottom: 1.5rem; }
+  .legal-section ul { list-style: none; margin-bottom: 2.5rem; }
+  .legal-section li { font-family: Arial, sans-serif; font-size: 0.9rem; color: #4b5563; line-height: 1.6; margin-bottom: 0.25rem; position: relative; padding: 1rem 1rem 1rem 2rem; border-bottom: 1px solid #f3f4f6; transition: all 0.3s ease; cursor: default; }
+  .legal-section li::before { content: '›'; position: absolute; left: 0.5rem; color: #c0392b; font-weight: bold; font-size: 1.2rem; line-height: 1; top: 0.9rem; }
+  .legal-section li:hover { background: #fcfcfc; padding-left: 2.5rem; border-bottom-color: #c0392b; color: #000; }
+  footer { background: #0a0a0a; color: rgba(255,255,255,0.7); padding: 4rem 0 2rem; border-top: 1px solid rgba(255,255,255,0.06); }
+  .footer-inner { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+  .footer-logo { font-family: Georgia, serif; font-size: 2rem; font-weight: 700; color: #c0392b; margin-bottom: 1.5rem; }
+  .footer-contact { font-family: Arial, sans-serif; font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 2rem; }
+  .footer-col h4 { font-size: 0.7rem; font-family: Arial, sans-serif; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.7rem; }
+  .footer-col ul li a { font-size: 0.82rem; font-family: Arial, sans-serif; color: rgba(255,255,255,0.6); transition: color 0.2s; }
+  .footer-col ul li a:hover { color: #fff; }
+  .footer-linkedin { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-size: 0.8rem; font-weight: 700; font-family: Arial, sans-serif; border-radius: 4px; }
+  .footer-bottom { max-width: 1400px; margin: 2rem auto 0; padding: 1.5rem 2rem 0; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .footer-bottom p { font-size: 0.72rem; font-family: Arial, sans-serif; color: rgba(255,255,255,0.3); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.72rem; font-family: Arial, sans-serif; color: rgba(255,255,255,0.3); transition: color 0.2s; }
+  .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+  @media(max-width:768px){ .nav-links{display:none;} .hamburger{display:flex;} .footer-inner{grid-template-columns:1fr 1fr;} }
+  @media(max-width:480px){
+    nav { padding: 0 1.25rem; } .logo { font-size: 1.3rem; }
+    .page-hero-content, .legal-content { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .page-title { font-size: 1.8rem; } .legal-section h2 { font-size: 1.5rem; }
+    .footer-inner{grid-template-columns:1fr; padding: 0 1.25rem;} }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="logo">Lawrence&Partners</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="practices.html">Our Practices</a></li>
+      <li><a href="team.html">Team</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="career.html">Career</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="lang active">EN</span><span class="lang-sep">|</span><span class="lang">TR</span>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="about.html">About Us</a><a href="practices.html">Our Practices</a><a href="team.html">Team</a>
+    <a href="news.html">News</a><a href="publications.html">Publications</a><a href="events.html">Events</a>
+    <a href="career.html">Career</a><a href="contact.html">Contact</a>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-content">
+    <div class="page-label">Legal Information</div>
+    <h1 class="page-title">Terms & Conditions</h1>
+  </div>
+</div>
+
+<div class="legal-content">
+  <section class="legal-section" id="terms">
+    <h2>Terms of Use</h2>
+    <p>Thank you for your interest in our firm.</p>
+    <p>This website is operated by Lawrence&Partners (“Lawrence&Partners”). The information about Lawrence&Partners and third parties provided on this website has been compiled with care and attention. However, we cannot guarantee that this information is complete and accurate. Lawrence&Partners assumes no liability for any errors that may appear in the contents of this website.</p>
+    <p>By visiting this website, you accept these Terms of Use without any restriction or objection. We may need to make changes and/or corrections to these Terms of Use from time to time due to ongoing technical innovations and changes in the relevant legal framework. Therefore, we kindly ask you to review these Terms of Use prior to each visit to this website and to take into account any changes and/or corrections.</p>
+    
+    <h3>Use of the website</h3>
+    <p>You are prohibited from accessing, copying, or monitoring any part of the website using any automated mechanism or process, such as a robot or spider. You must not attempt to gain unauthorised access to any part of the website and/or the application that directs you to this site by hacking or any other similar means. Furthermore, you are prohibited from using the website for any illegal purpose.</p>
+    
+    <h3>Copyright</h3>
+    <p>All intellectual and industrial property rights concerning all designs, arrangements, databases, information, and any other content on our website belong to Lawrence&Partners, and it is forbidden to use, copy, reproduce, disseminate, represent, transmit, or dispose of them in any way and for any purpose.</p>
+    
+    <h3>No responsibility for third-party websites</h3>
+    <p>This website contains hyperlinks to other websites operated by third parties whose contents are unknown to Lawrence&Partners. Lawrence&Partners provides access to these websites for your convenience but does not accept any responsibility for their contents. The presence of links to third-party websites is for ease of navigation only. Statements on linked sites are not made by us, and we have no express interest in the content of any third-party pages linked from our website. Specifically, we accept no responsibility for any breaches or violations of legal provisions on these pages by third parties. The owners of these websites are solely responsible for their content.</p>
+    <p>Lawrence&Partners accepts no responsibility for any infringement or violation of trademarks, copyrights, other intellectual property rights, or personal rights on websites linked by hyperlinks from this website. This liability applies to all links displayed on the lawrencepartners.com website and any website to which the user is directed via these links.</p>
+
+    <h3>Legal notice</h3>
+    <p>Lawrence&Partners makes significant efforts to keep its website free from viruses, but we cannot guarantee the absence of viruses. Therefore, we recommend that you ensure proper virus protection measures when downloading documents or data (e.g., using virus scanners). Lawrence&Partners cannot guarantee that there will be no defects or errors in the services offered on the website or that uninterrupted service can be provided.</p>
+
+    <h3>Use of social media plugins</h3>
+    <p>Our web pages may include embedded social network plugins from services such as Youtube, Instagram, Facebook, Spotify, and X (Twitter), provided by Google, Meta, Spotify, and X (Twitter) respectively.</p>
+
+    <h3>Miscellaneous</h3>
+    <p>These Terms of Use have been prepared in accordance with and are governed by the laws of the Republic of Türkiye. The Istanbul Çağlayan (Central) Courts and Enforcement Offices shall have jurisdiction to settle any dispute that may arise out of or in connection with these Terms of Use or the website. The invalidity or unenforceability of any of the terms of these Terms of Use shall not affect the validity of the remaining terms.</p>
+  </section>
+
+  <section class="legal-section" id="privacy">
+    <h2>Privacy Notice</h2>
+    <h3>Collection and use of certain information</h3>
+    <p>When you visit our website, certain information required for system management, statistics, and backup applications will be automatically stored on our servers. This data may include the name of your Internet service provider, your IP address, the version of your web browser software, the operating system of the computer accessed, the website that referred you to us, other sites you visited while on our site, and the search words you used to find our site. Such data allows some conclusions to be drawn about the site visitor, but no personal information will be used in this context. Any personal data collected will only be used after anonymisation. If Lawrence&Partners directs this data to an external service provider, it will do so in compliance with the legislation regarding data privacy and security.</p>
+    
+    <h3>Information on children</h3>
+    <p>Our website is intended for use by adults and is not intended for children. LAWRENCE&PARTNERS does not knowingly collect information from children under the age of 18 (eighteen). If parents or legal guardians suspect that information belonging to children under their supervision has been sent to LAWRENCE&PARTNERS, they should contact us immediately at contact@lawrencepartners.com to request deletion of the information. In such cases, the information will be promptly deleted.</p>
+
+    <h3>Specific Privacy Notices</h3>
+    <ul>
+      <li>Privacy Notice for Contact Form</li>
+      <li>Privacy Notice for Newsletter Subscription Form</li>
+      <li>Privacy Notice for Summer Intern Application Form</li>
+      <li>Privacy Notice for Legal Intern Application Form</li>
+      <li>Privacy Notice for Lawyer Application Form</li>
+      <li>Privacy Notice for Support Team Application Form</li>
+    </ul>
+  </section>
+
+  <section class="legal-section" id="cookies">
+    <h2>Cookie Policy</h2>
+    <p>We use cookies to improve your experience during your visits to our website “lawrencepartners.com”.</p>
+    <p>We may stop using the cookies we use on the website, change their types or functions, or add new cookies to the website. Therefore, we reserve the right to change this Cookie Policy at any time.</p>
+    
+    <h3>How do we use cookies?</h3>
+    <p>Lawrence&Partners uses cookies to remember your preferences and to personalise your use of our website.</p>
+    <p>The website also uses Google Analytics, a web analytics service provided by Google, Inc. (Google). Google Analytics uses cookies to analyse how visitors use the website with statistical information/reports. For more information about the use of Google Analytics (including refusal options), you can visit the following address: <a href="https://policies.google.com/privacy" target="_blank" style="color:#2563a8; text-decoration:underline;">https://policies.google.com/privacy</a></p>
+
+    <h3>Cookie management</h3>
+    <p>Depending on the type of your internet browser, you can learn about cookies and use your right to allow or reject them by following the steps below:</p>
+    <ul>
+      <li><strong>Google Chrome:</strong> You can allow or block cookies from the “Cookie” tab by clicking the “lock sign” or the letter “I” in the “address section” of your browser.</li>
+      <li><strong>Internet Explorer:</strong> Click on the “Security” tab from the “Tool” or “Tools” section in the upper right corner of your browser and perform our cookie management as “allow” or “do not allow”.</li>
+      <li><strong>Mozilla Firefox:</strong> Click the “Open menu” tab in the upper right corner of your browser. Click on the “Options” image and use the “Privacy and Security” button to manage your cookies.</li>
+      <li><strong>Safari:</strong> You can select the “Safari” tab from the “Settings” section of your phone and provide all your cookie management from the “Privacy and Security” section.</li>
+    </ul>
+    <p>For other browsers (such as Opera, Microsoft Edge), you can review the help or support pages of the relevant browser.</p>
+    <p>For more detailed information about cookies, you can visit <a href="https://www.allaboutcookies.org" target="_blank" style="color:#2563a8; text-decoration:underline;">www.allaboutcookies.org</a>.</p>
+    <p>If you reject persistent cookies or session cookies, you may continue to use our website, but you may not be able to access all functions or your access may be limited.</p>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Lawrence&Partners</div>
+      <div class="footer-contact">
+        Orjin Maslak, No:27 K:11<br>
+        Maslak 34485, Istanbul, Türkiye<br>
+        T: +90 850 540 4079
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore Our Firm</h4>
+      <ul>
+        <li><a href="about.html">› About Us</a></li>
+        <li><a href="practices.html">› Our Practices</a></li>
+        <li><a href="team.html">› Team</a></li>
+        <li><a href="news.html">› News</a></li>
+        <li><a href="publications.html">› Publications</a></li>
+        <li><a href="events.html">› Events</a></li>
+        <li><a href="career.html">› Career</a></li>
+        <li><a href="contact.html">› Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="terms.html#terms">› Terms of Use</a></li>
+        <li><a href="terms.html#privacy">› Privacy Notice</a></li>
+        <li><a href="terms.html#cookies">› Cookie Policy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Follow Us</h4>
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+        <a href="https://linkedin.com" target="_blank" rel="noopener" class="footer-linkedin">in</a>
+        <a href="https://x.com" target="_blank" rel="noopener" class="footer-linkedin">X</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-linkedin">ig</a>
+        <a href="https://facebook.com" target="_blank" rel="noopener" class="footer-linkedin">fb</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Lawrence&Partners. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="terms.html#privacy">Privacy Policy</a>
+      <a href="terms.html#cookies">Cookie Policy</a>
+      <a href="terms.html#terms">Terms of Use</a>
+    </div>
+  </div>
+</footer>
+
+<div id="cookieBanner" style="position:fixed;bottom:0;width:100%;background:#0a0a0a;color:#fff;padding:12px;text-align:center;z-index:9999;border-top:1px solid rgba(255,255,255,0.1);display:none;font-family:Arial,sans-serif;font-size:0.85rem;">
+  This website uses cookies to improve your experience.
+  <button onclick="acceptCookies()" style="margin-left:10px;padding:6px 16px;background:#c0392b;border:none;color:#fff;font-family:Arial,sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;text-transform:uppercase;">Accept</button>
+  <button onclick="declineCookies()" style="margin-left:5px;padding:6px 16px;background:#333;border:none;color:#fff;font-family:Arial,sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;text-transform:uppercase;">Decline</button>
+</div>
+
+<script>
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobile-menu');
+  if (hamburger) {
+    hamburger.addEventListener('click', function() {
+      mobileMenu.classList.toggle('open');
+      var spans = hamburger.querySelectorAll('span');
+      var open = mobileMenu.classList.contains('open');
+      spans[0].style.transform = open ? 'rotate(45deg) translate(5px,5px)' : '';
+      spans[1].style.opacity = open ? '0' : '';
+      spans[2].style.transform = open ? 'rotate(-45deg) translate(5px,-5px)' : '';
+    });
+  }
+
+  var langs = document.querySelectorAll('.lang');
+  langs.forEach(function(lang) {
+    lang.addEventListener('click', function() {
+      langs.forEach(function(l) { l.classList.remove('active'); });
+      this.classList.add('active');
+    });
+  });
+
+  function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
+
+  function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i].trim();
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+    }
+    return null;
+  }
+
+  function acceptCookies() {
+    setCookie("cookieConsent", "accepted", 365);
+    document.getElementById("cookieBanner").style.display = "none";
+    // load analytics here
+  }
+
+  function declineCookies() {
+    setCookie("cookieConsent", "declined", 365);
+    document.getElementById("cookieBanner").style.display = "none";
+  }
+
+  if (getCookie("cookieConsent")) {
+    document.getElementById("cookieBanner").style.display = "none";
+    if (getCookie("cookieConsent") === "accepted") { /* load analytics here */ }
+  } else {
+    document.getElementById("cookieBanner").style.display = "block";
+  }
+</script>
+</body>
+</html>

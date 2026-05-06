@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lawrence&Partners – Contact</title>
+<link rel="icon" type="image/png" href="/assets/img/favicon.ico">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: #fff; color: #111; line-height: 1.6; }
+  a { text-decoration: none; color: inherit; }
+  img { max-width: 100%; height: auto; display: block; }
+
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,10,10,0.97); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  nav { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .logo { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.72); font-family: Arial, sans-serif; font-size: 0.8rem; transition: color 0.2s; padding-bottom: 2px; border-bottom: 2px solid transparent; }
+  .nav-links a:hover, .nav-links a.active { color: #fff; border-bottom-color: #c0392b; }
+  .nav-right { display: flex; align-items: center; gap: 0.5rem; }
+  .lang { font-family: Arial, sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.5); cursor: pointer; }
+  .lang.active { color: #fff; font-weight: 600; }
+  .lang-sep { color: rgba(255,255,255,0.25); font-size: 0.75rem; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: 0.5rem; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: all 0.3s; }
+  .mobile-menu { display: none; background: rgba(10,10,10,0.98); border-top: 1px solid rgba(255,255,255,0.08); padding: 1rem 2rem 1.5rem; }
+  .mobile-menu a { display: block; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.85); font-family: Arial, sans-serif; font-size: 0.95rem; }
+  .mobile-menu.open { display: block; }
+
+  .page-hero { position: relative; height: 280px; background: #0a0a0a; display: flex; align-items: flex-end; overflow: hidden; }
+  .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&q=80'); background-size: cover; background-position: center; opacity: 0.3; }
+  .page-hero-content { position: relative; z-index: 2; max-width: 1400px; width: 100%; margin: 0 auto; padding: 2rem 2rem 2.5rem; }
+  .page-label { font-family: Arial, sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #c0392b; margin-bottom: 0.5rem; }
+  .page-title { font-family: Georgia, serif; font-size: 2.2rem; font-weight: 400; color: #fff; }
+
+  .main-layout { max-width: 1400px; margin: 0 auto; padding: 5rem 2rem 6rem; display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start; }
+
+  .office-img { width: 100%; height: 220px; object-fit: cover; margin-bottom: 1.5rem; }
+  .map-link { display: inline-flex; align-items: center; gap: 0.4rem; font-family: Arial, sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #2563a8; margin-bottom: 1.5rem; }
+  .map-link:hover { color: #c0392b; }
+  .info-block { margin-bottom: 2rem; }
+  .info-block h3 { font-family: Arial, sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #c0392b; margin-bottom: 1rem; }
+  .office-name { font-family: Georgia, serif; font-size: 1.3rem; font-weight: 400; color: #0a0a0a; margin-bottom: 0.5rem; } /* Keep as is, it's a heading-like element */
+  .office-addr { font-family: Arial, sans-serif; font-size: 0.85rem; color: #4b5563; line-height: 1.8; }
+  .divider { border: none; border-top: 1px solid #e5e7eb; margin: 1.5rem 0; }
+  .contact-detail { margin-bottom: 1.5rem; }
+  .contact-detail h4 { font-family: Arial, sans-serif; font-size: 0.75rem; color: #9ca3af; font-weight: 400; margin-bottom: 0.25rem; }
+  .contact-detail a { font-family: Georgia, serif; font-size: 1rem; color: #0a0a0a; }
+  .contact-detail a:hover { color: #c0392b; }
+  .note { font-family: Arial, sans-serif; font-size: 0.8rem; color: #6b7280; line-height: 1.7; }
+  .note a { color: #2563a8; text-decoration: underline; }
+
+  .form-section h2 { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 400; color: #0a0a0a; margin-bottom: 0.5rem; }
+  .form-section-label { font-size: 0.65rem; font-family: Arial, sans-serif; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #c0392b; margin-bottom: 0.75rem; }
+  .form-subtitle { font-family: Arial, sans-serif; font-size: 0.82rem; color: #6b7280; margin-bottom: 2rem; line-height: 1.6; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
+  .form-label { font-family: Arial, sans-serif; font-size: 0.75rem; color: #374151; font-weight: 600; }
+  .required { color: #c0392b; }
+  .form-input, .form-textarea { padding: 0.7rem 0.9rem; border: 1px solid #d1d5db; font-family: Arial, sans-serif; font-size: 0.85rem; color: #111827; outline: none; transition: border-color 0.2s; background: #fff; width: 100%; }
+  .form-input:focus, .form-textarea:focus { border-color: #c0392b; }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .consent-row { display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 1.5rem; }
+  .consent-row input[type="checkbox"] { margin-top: 2px; accent-color: #c0392b; cursor: pointer; flex-shrink: 0; }
+  .consent-text { font-family: Arial, sans-serif; font-size: 0.78rem; color: #6b7280; line-height: 1.6; }
+  .submit-btn { padding: 0.85rem 2.5rem; background: #c0392b; border: none; color: #fff; font-family: Arial, sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+  .submit-btn:hover { background: #a93226; }
+  .success-msg { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 2rem; text-align: center; }
+  .success-msg h3 { font-family: Georgia, serif; font-size: 1.25rem; color: #15803d; margin-bottom: 0.5rem; }
+  .success-msg p { font-family: Arial, sans-serif; font-size: 0.85rem; color: #4b5563; }
+
+  footer { background: #0a0a0a; color: rgba(255,255,255,0.7); padding: 4rem 0 2rem; border-top: 1px solid rgba(255,255,255,0.06); }
+  .footer-inner { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+  .footer-logo { font-family: Georgia, serif; font-size: 2rem; font-weight: 700; color: #c0392b; margin-bottom: 1.5rem; }
+  .footer-contact { font-family: Arial, sans-serif; font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 2rem; }
+  .footer-newsletter-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); font-family: Arial, sans-serif; margin-bottom: 1rem; }
+  .newsletter-form { display: flex; }
+  .newsletter-input { flex: 1; padding: 0.65rem 1rem; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-right: none; color: #fff; font-size: 0.8rem; font-family: Arial, sans-serif; outline: none; }
+  .newsletter-btn { padding: 0.65rem 1.25rem; background: #c0392b; border: none; color: #fff; font-size: 0.75rem; font-family: Arial, sans-serif; font-weight: 600; cursor: pointer; }
+  .footer-col h4 { font-size: 0.7rem; font-family: Arial, sans-serif; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.7rem; }
+  .footer-col ul li a { font-size: 0.82rem; font-family: Arial, sans-serif; color: rgba(255,255,255,0.6); }
+  .footer-col ul li a:hover { color: #fff; }
+  .footer-linkedin { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-size: 0.8rem; font-weight: 700; font-family: Arial, sans-serif; border-radius: 4px; }
+  .footer-linkedin:hover { background: #0a66c2; }
+  .footer-bottom { max-width: 1400px; margin: 2rem auto 0; padding: 1.5rem 2rem 0; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .footer-bottom p { font-size: 0.72rem; font-family: Arial, sans-serif; color: rgba(255,255,255,0.3); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.72rem; font-family: Arial, sans-serif; color: rgba(255,255,255,0.3); }
+
+  @media(max-width:900px){ .nav-links{display:none;} .hamburger{display:flex;} .main-layout{grid-template-columns:1fr;gap:3rem;} .form-row{grid-template-columns:1fr;} .footer-inner{grid-template-columns:1fr 1fr;} }
+  @media(max-width:480px){
+    nav { padding: 0 1.25rem; } .logo { font-size: 1.3rem; }
+    .page-hero-content, .main-layout { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .page-title { font-size: 1.8rem; } .form-section h2 { font-size: 1.4rem; }
+    .footer-inner{grid-template-columns:1fr; padding: 0 1.25rem;} }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="logo">Lawrence&Partners</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="practices.html">Our Practices</a></li>
+      <li><a href="team.html">Team</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="career.html">Career</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="lang active">EN</span><span class="lang-sep">|</span><span class="lang">TR</span>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="about.html">About Us</a><a href="practices.html">Our Practices</a><a href="team.html">Team</a>
+    <a href="news.html">News</a><a href="publications.html">Publications</a><a href="events.html">Events</a>
+    <a href="career.html">Career</a><a href="contact.html">Contact</a>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-content">
+    <div class="page-label">Contact</div>
+    <h1 class="page-title">How can we help?</h1>
+  </div>
+</div>
+
+<div class="main-layout">
+  <div>
+    <img class="office-img" src="https://paksoy.av.tr/wp-content/uploads/2025/09/paksoy-office-orjin-maslak.webp" alt="Lawrence and partner LAW CONSULTİNG Istanbul Office" onerror="this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80'">
+    <a href="https://g.co/kgs/FTuyvam" target="_blank" class="map-link">&#8599; Show on Map</a>
+    <div class="info-block">
+      <h3>Istanbul Office</h3>
+      <div class="office-name">Lawrence&Partners</div>
+      <div class="office-addr">Orjin Maslak<br>Eski Büyükdere Caddesi No:27 K:11<br>Maslak 34485<br>Istanbul, Türkiye<br><br>Weekdays: 09:00 – 18:00</div>
+    </div>
+    <hr class="divider">
+    <div class="contact-detail"><h4>General Questions — E-mail</h4><a href="mailto:donaldliearley@gmail.com">mailto:donaldliearley@gmail.com</a></div>
+    <div class="contact-detail"><h4>Phone</h4><a href="tel:+908505404079">+90 850 540 4079</a></div>
+    <hr class="divider">
+    <p class="note">We kindly ask visitors who want to apply for a job to send their CVs to our <a href="career.html">Career page</a> or the job application section of our <a href="https://www.linkedin.com/company/paksoy-law-firm/" target="_blank">LinkedIn</a> account.</p>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section-label">Contact Form</div>
+    <h2>Send us a message</h2>
+    <p class="form-subtitle">You can contact us via our contact information or fill out the form below.</p>
+    <div id="formWrap">
+      <form id="contactForm" onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Name <span class="required">*</span></label><input class="form-input" type="text" required></div>
+          <div class="form-group"><label class="form-label">Surname <span class="required">*</span></label><input class="form-input" type="text" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Company</label><input class="form-input" type="text"></div>
+          <div class="form-group"><label class="form-label">Phone</label><input class="form-input" type="tel"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Email Address <span class="required">*</span></label><input class="form-input" type="email" required></div>
+        <div class="form-group"><label class="form-label">Subject <span class="required">*</span></label><input class="form-input" type="text" required></div>
+        <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea"></textarea></div>
+        <div class="consent-row">
+          <input type="checkbox" id="consent" required>
+          <label for="consent" class="consent-text">I have read and understood the privacy notice for the personal data provided through this contact form and consent to the processing of my personal data. <span class="required">*</span></label>
+        </div>
+        <button type="submit" class="submit-btn">Send Message &rarr;</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Lawrence&Partners</div>
+      <div class="footer-contact">
+        Orjin Maslak, No:27 K:11<br>
+        Maslak 34485, Istanbul, Türkiye<br>
+        T: +90 850 540 4079
+      </div>
+      <p class="footer-newsletter-label">Sign up for our newsletter</p>
+      <form class="newsletter-form" onsubmit="return false;"><input class="newsletter-input" type="email" placeholder="Email address"><button class="newsletter-btn" type="submit">Subscribe</button></form>
+    </div>
+    <div class="footer-col"><h4>Explore Our Firm</h4><ul><li><a href="about.html">› About Us</a></li><li><a href="practices.html">› Our Practices</a></li><li><a href="team.html">› Team</a></li><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li><li><a href="career.html">› Career</a></li><li><a href="contact.html">› Contact</a></li></ul></div>
+    <div class="footer-col"><h4>News &amp; Publications</h4><ul><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li></ul></div>
+    <div class="footer-col"><h4>Follow Us</h4><div style="display:flex; gap:0.5rem; flex-wrap:wrap;"><a href="https://linkedin.com" target="_blank" rel="noopener" class="footer-linkedin">in</a><a href="https://x.com" target="_blank" rel="noopener" class="footer-linkedin">X</a><a href="https://instagram.com" target="_blank" rel="noopener" class="footer-linkedin">ig</a><a href="https://facebook.com" target="_blank" rel="noopener" class="footer-linkedin">fb</a></div></div>
+  </div>
+  <div class="footer-bottom"><p>&copy; 2026 Lawrence&Partners. All rights reserved.</p><div class="footer-links"><a href="terms.html#privacy">Privacy Policy</a><a href="terms.html#cookies">Cookie Policy</a><a href="terms.html#terms">Terms of Use</a></div></div>
+</footer>
+
+<div id="cookieBanner" style="position:fixed;bottom:0;width:100%;background:#0a0a0a;color:#fff;padding:12px;text-align:center;z-index:9999;border-top:1px solid rgba(255,255,255,0.1);display:none;font-family:Arial,sans-serif;font-size:0.85rem;">
+  This website uses cookies to improve your experience.
+  <button onclick="acceptCookies()" style="margin-left:10px;padding:6px 16px;background:#c0392b;border:none;color:#fff;font-family:Arial,sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;text-transform:uppercase;">Accept</button>
+  <button onclick="declineCookies()" style="margin-left:5px;padding:6px 16px;background:#333;border:none;color:#fff;font-family:Arial,sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;text-transform:uppercase;">Decline</button>
+</div>
+
+<script>
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', function() {
+    mobileMenu.classList.toggle('open');
+    var spans = hamburger.querySelectorAll('span');
+    var open = mobileMenu.classList.contains('open');
+    spans[0].style.transform = open ? 'rotate(45deg) translate(5px,5px)' : '';
+    spans[1].style.opacity = open ? '0' : '';
+    spans[2].style.transform = open ? 'rotate(-45deg) translate(5px,-5px)' : '';
+  });
+
+  function submitForm(e) {
+    e.preventDefault();
+    document.getElementById('formWrap').innerHTML = '<div class="success-msg"><h3>Thank you for reaching out!</h3><p>We have received your message and will get back to you shortly.</p></div>';
+  }
+
+  var langs = document.querySelectorAll('.lang');
+  var savedLang = localStorage.getItem('selectedLanguage');
+  if (savedLang) {
+    langs.forEach(function(l) {
+      l.classList.remove('active');
+      if (l.textContent === savedLang) l.classList.add('active');
+    });
+  }
+  langs.forEach(function(lang) {
+    lang.addEventListener('click', function() {
+      langs.forEach(function(l) { l.classList.remove('active'); });
+      this.classList.add('active');
+      localStorage.setItem('selectedLanguage', this.textContent);
+    });
+  });
+
+  function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
+
+  function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i].trim();
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+    }
+    return null;
+  }
+
+  function acceptCookies() {
+    setCookie("cookieConsent", "accepted", 365);
+    document.getElementById("cookieBanner").style.display = "none";
+    // load analytics here
+  }
+
+  function declineCookies() {
+    setCookie("cookieConsent", "declined", 365);
+    document.getElementById("cookieBanner").style.display = "none";
+  }
+
+  if (getCookie("cookieConsent")) {
+    document.getElementById("cookieBanner").style.display = "none";
+    if (getCookie("cookieConsent") === "accepted") { /* load analytics here */ }
+  } else {
+    document.getElementById("cookieBanner").style.display = "block";
+  }
+</script>
+</body>
+</html>
