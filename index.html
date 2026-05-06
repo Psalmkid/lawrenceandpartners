@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lawrence&Partners – Home</title>
 <link rel="icon" type="image/png" href="/assets/img/favicon.ico">
+<link rel="preload" href="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80&fm=webp" as="image">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Georgia, 'Times New Roman', serif; background: #fff; color: #111; line-height: 1.6; }
@@ -30,7 +31,10 @@
   .nav-right { display: flex; align-items: center; gap: 0.5rem; }
   .lang { font-family: Arial, sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.5); cursor: pointer; }
   .lang.active { color: #fff; font-weight: 600; }
-  .lang-sep { color: rgba(255,255,255,0.25); font-size: 0.75rem; }
+  #toast { visibility: hidden; min-width: 250px; background: #0a0a0a; color: #fff; text-align: center; border-radius: 2px; padding: 16px; position: fixed; z-index: 10000; left: 50%; bottom: 30px; transform: translateX(-50%); font-family: Arial, sans-serif; font-size: 0.85rem; border: 1px solid #c0392b; }
+  #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+  @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+  @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
   .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: 0.5rem; }
   .hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: all 0.3s; }
   .mobile-menu { display: none; background: rgba(10,10,10,0.98); border-top: 1px solid rgba(255,255,255,0.08); padding: 1rem 2rem 1.5rem; }
@@ -44,7 +48,7 @@
   }
   .hero-bg {
     position: absolute; inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80');
+    background-image: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80&fm=webp');
     background-size: cover; background-position: center; opacity: 0.4;
   }
   .hero-overlay {
@@ -163,9 +167,7 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="nav-right">
-      <span class="lang active">EN</span>
-      <span class="lang-sep">|</span>
-      <span class="lang">TR</span>
+      <img src="https://flagcdn.com/w2560/tr.png" alt="Turkey Flag" style="height: 20px; width: auto; display: block;">
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -200,14 +202,14 @@
     <div class="news-bar">
       <div class="news-bar-label">News &amp;<br>Publications</div>
       <a href="news.html" class="news-bar-item">
-        <img src="https://paksoy.av.tr/wp-content/uploads/2026/04/Pub_No-poach-agreements-concurrences.jpg" alt="News" onerror="this.style.display='none'">
+        <img src="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=160&q=60&fm=webp" alt="News" loading="lazy" decoding="async" onerror="this.style.display='none'">
         <div>
           <div class="news-bar-date">24 April 2026</div>
           <div class="news-bar-title">Turkish competition board fines seventeen pharmaceutical companies for no-poach agreements and wage data exchange</div>
         </div>
       </a>
       <a href="news.html" class="news-bar-item">
-        <img src="https://paksoy.av.tr/wp-content/uploads/2026/04/Pub_Just_cause_termination_LIR.jpg" alt="News" onerror="this.style.display='none'">
+        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=160&q=60&fm=webp" alt="News" loading="lazy" decoding="async" onerror="this.style.display='none'">
         <div>
           <div class="news-bar-date">15 April 2026</div>
           <div class="news-bar-title">Just cause termination in disciplinary investigations under Turkish law</div>
@@ -222,7 +224,7 @@
     <div class="section-label">Who We Are</div>
     <h2>A leading independent Turkish law firm</h2>
     <p>Lawrence&Partners is an Istanbul-based independent Turkish law firm with over 130 employees, offering legal advice and counselling to foreign investors and the Turkish business community.</p>
-    <p>Founded in 1997 by Serdar Paksoy, the firm was established with a commitment to providing result-oriented, creative, innovative, fast and high quality legal advice at international standards.</p>
+    <p>Founded in 1997 by Serdar Lawrence, the firm was established with a commitment to providing result-oriented, creative, innovative, fast and high quality legal advice at international standards.</p>
     <div class="stats-row">
       <div class="stat"><h3>25+</h3><p>Years of Experience</p></div>
       <div class="stat"><h3>130+</h3><p>Dedicated People</p></div>
@@ -230,7 +232,7 @@
     </div>
   </div>
   <div class="about-img">
-    <img src="https://paksoy.av.tr/wp-content/uploads/2025/09/about-us-02.webp" alt="Lawrence&Partners Office" onerror="this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80'">
+    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=70&fm=webp" alt="Lawrence&Partners Office" loading="lazy" decoding="async">
   </div>
 </div>
 
@@ -274,32 +276,32 @@
   </div>
   <div class="news-grid">
     <a href="news.html" class="news-card">
-      <img src="https://paksoy.av.tr/wp-content/uploads/2026/04/Pub_No-poach-agreements-concurrences.jpg" alt="" onerror="this.src='https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80'">
+      <img src="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&q=60&fm=webp" alt="" loading="lazy" decoding="async">
       <div class="news-card-date">24 April 2026</div>
       <div class="news-card-title">Turkish competition board fines seventeen pharmaceutical companies for no-poach agreements and wage data exchange</div>
     </a>
     <a href="news.html" class="news-card">
-      <img src="https://paksoy.av.tr/wp-content/uploads/2026/04/Pub_Just_cause_termination_LIR.jpg" alt="" onerror="this.src='https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80'">
+      <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=60&fm=webp" alt="" loading="lazy" decoding="async">
       <div class="news-card-date">15 April 2026</div>
       <div class="news-card-title">Just cause termination in disciplinary investigations under Turkish law</div>
     </a>
     <a href="news.html" class="news-card">
-      <img src="https://paksoy.av.tr/wp-content/uploads/2026/04/Newsletter-Healthcare-1.jpg" alt="" onerror="this.src='https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80'">
+      <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=600&q=60&fm=webp" alt="" loading="lazy" decoding="async">
       <div class="news-card-date">13 April 2026</div>
       <div class="news-card-title">Recent developments in healthcare legislation – Issue 2026/1</div>
     </a>
     <a href="news.html" class="news-card">
-      <img src="https://paksoy.av.tr/wp-content/uploads/2026/04/Briefing-Lisanssiz-elektrik-uretiminde-saatlik-mahsuplasma-son.jpg" alt="" onerror="this.src='https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80'">
+      <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=60&fm=webp" alt="" loading="lazy" decoding="async">
       <div class="news-card-date">10 April 2026</div>
       <div class="news-card-title">Transition to hourly offsetting for unlicensed electricity generation</div>
     </a>
     <a href="news.html" class="news-card">
-      <img src="https://paksoy.av.tr/wp-content/uploads/2026/04/Deal-News-Anadolu-Efes.jpg" alt="" onerror="this.src='https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80'">
+      <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=60&fm=webp" alt="" loading="lazy" decoding="async">
       <div class="news-card-date">10 April 2026</div>
       <div class="news-card-title">Lawrence&Partners advises Anadolu Efes on the acquisition of a majority stake in Mercan Rakı</div>
     </a>
     <a href="news.html" class="news-card">
-      <img src="https://paksoy.av.tr/wp-content/uploads/2026/04/Pub_Mucbir-Sebep-Asiri-Ifa-Guclugu.jpg" alt="" onerror="this.src='https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80'">
+      <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&q=60&fm=webp" alt="" loading="lazy" decoding="async">
       <div class="news-card-date">3 April 2026</div>
       <div class="news-card-title">Force majeure and hardship: An assessment in light of current issues</div>
     </a>
@@ -323,8 +325,8 @@
         T: +90 850 540 4079
       </div>
       <p class="footer-newsletter-label">Sign up for our newsletter</p>
-      <form class="newsletter-form" onsubmit="return false;">
-        <input class="newsletter-input" type="email" placeholder="Email address">
+      <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+        <input id="newsletter-email" class="newsletter-input" type="email" placeholder="Email address" required>
         <button class="newsletter-btn" type="submit">Subscribe</button>
       </form>
     </div>
@@ -369,6 +371,8 @@
   </div>
 </footer>
 
+<div id="toast">Thank you! Your subscription request has been sent.</div>
+
 <div id="cookieBanner" style="position:fixed;bottom:0;width:100%;background:#0a0a0a;color:#fff;padding:12px;text-align:center;z-index:9999;border-top:1px solid rgba(255,255,255,0.1);display:none;font-family:Arial,sans-serif;font-size:0.85rem;">
   This website uses cookies to improve your experience.
   <button onclick="acceptCookies()" style="margin-left:10px;padding:6px 16px;background:#c0392b;border:none;color:#fff;font-family:Arial,sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;text-transform:uppercase;">Accept</button>
@@ -392,22 +396,48 @@
     }
   });
 
-  var langs = document.querySelectorAll('.lang');
-  var savedLang = localStorage.getItem('selectedLanguage');
-  if (savedLang) {
-    langs.forEach(function(l) {
-      l.classList.remove('active');
-      if (l.textContent === savedLang) l.classList.add('active');
+  function subscribeNewsletter(e) {
+    e.preventDefault();
+    var email = document.getElementById("newsletter-email").value;
+    const formspreeEndpoint = "https://formspree.io/f/xzdovpyk"; // User's Formspree endpoint
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('form_type', 'Newsletter Subscription'); // Add a field to identify the form type
+
+    fetch(formspreeEndpoint, {
+      method: "POST",
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      if (response.ok) {
+        showToast("Thank you! Your subscription request has been sent.");
+        document.getElementById("newsletter-email").value = ''; // Clear the email field
+      } else {
+        response.json().then(data => {
+          if (data.errors) {
+            let errorMessage = "Subscription failed: ";
+            data.errors.forEach(error => { errorMessage += `${error.message} `; });
+            showToast(errorMessage.trim());
+          } else {
+            showToast("Subscription failed. Please try again.");
+          }
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error subscribing to newsletter:', error);
+      showToast("Network error. Please check your connection and try again.");
     });
   }
-  langs.forEach(function(lang) {
-    lang.addEventListener('click', function() {
-      langs.forEach(function(l) { l.classList.remove('active'); });
-      this.classList.add('active');
-      localStorage.setItem('selectedLanguage', this.textContent);
-    });
-  });
 
+  function showToast(message) {
+    var t = document.getElementById("toast");
+    t.textContent = message;
+    t.className = "show";
+    setTimeout(function(){ t.className = t.className.replace("show", ""); }, 3000);
+  }
   function setCookie(name, value, days) {
     var expires = "";
     if (days) {

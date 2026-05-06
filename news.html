@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lawrence&Partners – News</title>
 <link rel="icon" type="image/png" href="/assets/img/favicon.ico">
+<link rel="preload" href="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&q=80&fm=webp" as="image">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Georgia, 'Times New Roman', serif; background: #fff; color: #111; line-height: 1.6; }
@@ -21,6 +22,10 @@
   .lang { font-family: Arial, sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.5); cursor: pointer; }
   .lang.active { color: #fff; font-weight: 600; }
   .lang-sep { color: rgba(255,255,255,0.25); font-size: 0.75rem; }
+  #toast { visibility: hidden; min-width: 250px; background: #0a0a0a; color: #fff; text-align: center; border-radius: 2px; padding: 16px; position: fixed; z-index: 10000; left: 50%; bottom: 30px; transform: translateX(-50%); font-family: Arial, sans-serif; font-size: 0.85rem; border: 1px solid #c0392b; }
+  #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+  @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+  @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
   .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: 0.5rem; }
   .hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: all 0.3s; }
   .mobile-menu { display: none; background: rgba(10,10,10,0.98); border-top: 1px solid rgba(255,255,255,0.08); padding: 1rem 2rem 1.5rem; }
@@ -28,7 +33,7 @@
   .mobile-menu.open { display: block; }
 
   .page-hero { position: relative; height: 320px; background: #0a0a0a; display: flex; align-items: flex-end; overflow: hidden; padding-top: 72px; }
-  .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&q=80'); background-size: cover; background-position: center; opacity: 0.45; }
+  .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&q=80&fm=webp'); background-size: cover; background-position: center; opacity: 0.45; }
   .page-hero-content { position: relative; z-index: 2; max-width: 1400px; width: 100%; margin: 0 auto; padding: 2rem 2rem 2.5rem; }
   .page-label { font-family: Arial, sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #c0392b; margin-bottom: 0.5rem; }
   .page-title { font-family: Georgia, serif; font-size: 2.2rem; font-weight: 400; color: #fff; }
@@ -44,13 +49,12 @@
   .sidebar-option.active .sidebar-dot { border-color: #c0392b; background: #c0392b; }
 
   .results-count { font-family: Arial, sans-serif; font-size: 0.8rem; color: #9ca3af; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 2px solid #0a0a0a; }
-  .news-item { display: flex; gap: 1.5rem; padding: 2rem 0; border-bottom: 1px solid #f3f4f6; cursor: pointer; }
-  .news-item:hover .news-item-title { color: #c0392b; }
+  .news-item { display: flex; gap: 1.5rem; padding: 2rem 0; border-bottom: 1px solid #f3f4f6; }
   .news-item img { width: 160px; height: 110px; object-fit: cover; flex-shrink: 0; }
   .news-item-meta { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; }
   .news-item-date { font-family: Arial, sans-serif; font-size: 0.7rem; color: #9ca3af; }
   .news-item-type { font-family: Arial, sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; background: #c0392b; padding: 0.15rem 0.5rem; }
-  .news-item-title { font-family: Georgia, serif; font-size: 1rem; color: #111827; line-height: 1.5; margin-bottom: 0.5rem; transition: color 0.2s; }
+  .news-item-title { font-family: Georgia, serif; font-size: 1rem; color: #111827; line-height: 1.5; margin-bottom: 0.5rem; }
   .news-item-cat { font-family: Arial, sans-serif; font-size: 0.72rem; color: #6b7280; }
   .no-results { padding: 4rem 0; font-family: Arial, sans-serif; color: #9ca3af; text-align: center; }
 
@@ -98,7 +102,7 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="nav-right">
-      <span class="lang active">EN</span><span class="lang-sep">|</span><span class="lang">TR</span>
+      <span style="font-size: 1.25rem;">🇹🇷</span>
       <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -136,6 +140,7 @@
       </div>
       <p class="footer-newsletter-label">Sign up for our newsletter</p>
       <form class="newsletter-form" onsubmit="return false;"><input class="newsletter-input" type="email" placeholder="Email address"><button class="newsletter-btn" type="submit">Subscribe</button></form>
+      <form class="newsletter-form" onsubmit="subscribeNewsletter(event)"><input id="newsletter-email" class="newsletter-input" type="email" placeholder="Email address" required><button class="newsletter-btn" type="submit">Subscribe</button></form>
     </div>
     <div class="footer-col"><h4>Explore Our Firm</h4><ul><li><a href="about.html">› About Us</a></li><li><a href="practices.html">› Our Practices</a></li><li><a href="team.html">› Team</a></li><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li><li><a href="career.html">› Career</a></li><li><a href="contact.html">› Contact</a></li></ul></div>
     <div class="footer-col"><h4>News &amp; Publications</h4><ul><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li></ul></div>
@@ -143,6 +148,8 @@
   </div>
   <div class="footer-bottom"><p>&copy; 2026 Lawrence&Partners. All rights reserved.</p><div class="footer-links"><a href="terms.html#privacy">Privacy Policy</a><a href="terms.html#cookies">Cookie Policy</a><a href="terms.html#terms">Terms of Use</a></div></div>
 </footer>
+
+<div id="toast">Thank you! Your subscription request has been sent.</div>
 
 <div id="cookieBanner" style="position:fixed;bottom:0;width:100%;background:#0a0a0a;color:#fff;padding:12px;text-align:center;z-index:9999;border-top:1px solid rgba(255,255,255,0.1);display:none;font-family:Arial,sans-serif;font-size:0.85rem;">
   This website uses cookies to improve your experience.
@@ -163,18 +170,18 @@
   });
 
   var allNews = [
-    { date: '24 April 2026', title: 'Turkish competition board fines seventeen pharmaceutical companies for no-poach agreements and wage data exchange', category: 'Antitrust and Competition', type: 'Publication', img: 'https://paksoy.av.tr/wp-content/uploads/2026/04/Pub_No-poach-agreements-concurrences.jpg' },
-    { date: '15 April 2026', title: 'Just cause termination in disciplinary investigations under Turkish law', category: 'Labour and Employment', type: 'Publication', img: 'https://paksoy.av.tr/wp-content/uploads/2026/04/Pub_Just_cause_termination_LIR.jpg' },
-    { date: '13 April 2026', title: 'Recent developments in healthcare legislation – Issue 2026/1', category: 'Healthcare and Life Sciences', type: 'Newsletter', img: 'https://paksoy.av.tr/wp-content/uploads/2026/04/Newsletter-Healthcare-1.jpg' },
-    { date: '10 April 2026', title: 'Transition to hourly offsetting for unlicensed electricity generation', category: 'Energy, Infrastructure and Projects', type: 'Briefing', img: 'https://paksoy.av.tr/wp-content/uploads/2026/04/Briefing-Lisanssiz-elektrik-uretiminde-saatlik-mahsuplasma-son.jpg' },
-    { date: '10 April 2026', title: 'Lawrence&Partners advises Anadolu Efes on the acquisition of a majority stake in Mercan Rakı', category: 'Mergers and Acquisitions', type: 'Deal News', img: 'https://paksoy.av.tr/wp-content/uploads/2026/04/Deal-News-Anadolu-Efes.jpg' },
-    { date: '3 April 2026', title: 'Force majeure and hardship: An assessment in light of current issues', category: 'Corporate and Commercial', type: 'Publication', img: 'https://paksoy.av.tr/wp-content/uploads/2026/04/Pub_Mucbir-Sebep-Asiri-Ifa-Guclugu.jpg' },
-    { date: '28 March 2026', title: 'Capital markets regulatory update – Q1 2026', category: 'Capital Markets', type: 'Newsletter', img: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80' },
-    { date: '20 March 2026', title: 'Paksoy advises on landmark cross-border infrastructure project financing', category: 'Energy, Infrastructure and Projects', type: 'Deal News', img: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80' },
-    { date: '15 March 2026', title: 'New data protection regulations: what businesses need to know', category: 'Data Privacy and Cyber Security', type: 'Briefing', img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80' },
-    { date: '5 March 2026', title: 'Banking sector reforms and their impact on corporate lending', category: 'Banking and Finance', type: 'Publication', img: 'https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?w=600&q=80' },
-    { date: '20 February 2026', title: 'Restructuring trends in Turkish market: 2025 in review', category: 'Restructuring and Insolvency', type: 'Publication', img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80' },
-    { date: '10 February 2026', title: 'Technology sector M&A activity reaches record levels in Turkey', category: 'Mergers and Acquisitions', type: 'Deal News', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80' }
+    { date: '24 April 2026', title: 'Turkish competition board fines seventeen pharmaceutical companies for no-poach agreements and wage data exchange', category: 'Antitrust and Competition', type: 'Publication', img: 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&q=60&fm=webp' },
+    { date: '15 April 2026', title: 'Just cause termination in disciplinary investigations under Turkish law', category: 'Labour and Employment', type: 'Publication', img: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=60&fm=webp' },
+    { date: '13 April 2026', title: 'Recent developments in healthcare legislation – Issue 2026/1', category: 'Healthcare and Life Sciences', type: 'Newsletter', img: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=600&q=60&fm=webp' },
+    { date: '10 April 2026', title: 'Transition to hourly offsetting for unlicensed electricity generation', category: 'Energy, Infrastructure and Projects', type: 'Briefing', img: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=60&fm=webp' },
+    { date: '10 April 2026', title: 'Lawrence&Partners advises Anadolu Efes on the acquisition of a majority stake in Mercan Rakı', category: 'Mergers and Acquisitions', type: 'Deal News', img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=60&fm=webp' },
+    { date: '3 April 2026', title: 'Force majeure and hardship: An assessment in light of current issues', category: 'Corporate and Commercial', type: 'Publication', img: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&q=60&fm=webp' },
+    { date: '28 March 2026', title: 'Capital markets regulatory update – Q1 2026', category: 'Capital Markets', type: 'Newsletter', img: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=60&fm=webp' },
+    { date: '20 March 2026', title: 'Lawrence&Partners advises on landmark cross-border infrastructure project financing', category: 'Energy, Infrastructure and Projects', type: 'Deal News', img: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=60&fm=webp' },
+    { date: '15 March 2026', title: 'New data protection regulations: What businesses need to know', category: 'Data Privacy and Cyber Security', type: 'Briefing', img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=60&fm=webp' },
+    { date: '5 March 2026', title: 'Banking sector reforms and their impact on corporate lending', category: 'Banking and Finance', type: 'Publication', img: 'https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?w=600&q=60&fm=webp' },
+    { date: '20 February 2026', title: 'Restructuring trends in Turkish market: 2025 in review', category: 'Restructuring and Insolvency', type: 'Publication', img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=60&fm=webp' },
+    { date: '10 February 2026', title: 'Technology sector M&A activity reaches record levels in Turkey', category: 'Mergers and Acquisitions', type: 'Deal News', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=60&fm=webp' }
   ];
 
   var categories = ['All','Antitrust and Competition','Banking and Finance','Capital Markets','Corporate and Commercial','Data Privacy and Cyber Security','Energy, Infrastructure and Projects','Healthcare and Life Sciences','Labour and Employment','Mergers and Acquisitions','Restructuring and Insolvency'];
@@ -204,7 +211,7 @@
     var list = document.getElementById('newsList');
     if (!filtered.length) { list.innerHTML = '<div class="no-results">No results found.</div>'; return; }
     list.innerHTML = filtered.map(function(item) {
-      return '<div class="news-item"><img src="' + item.img + '" alt="" onerror="this.src=\'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=80\'">' +
+      return '<div class="news-item"><img src="' + item.img + '" alt="" loading="lazy" decoding="async" onerror="this.src=\'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=60&fm=webp\'">' +
         '<div><div class="news-item-meta"><span class="news-item-date">' + item.date + '</span><span class="news-item-type">' + item.type + '</span></div>' +
         '<div class="news-item-title">' + item.title + '</div>' +
         '<div class="news-item-cat">' + item.category + '</div></div></div>';
@@ -219,14 +226,49 @@
       if (l.textContent === savedLang) l.classList.add('active');
     });
   }
-  langs.forEach(function(lang) {
-    lang.addEventListener('click', function() {
-      langs.forEach(function(l) { l.classList.remove('active'); });
-      this.classList.add('active');
-      localStorage.setItem('selectedLanguage', this.textContent);
-    });
-  });
 
+  function subscribeNewsletter(e) {
+    e.preventDefault();
+    var email = document.getElementById("newsletter-email").value;
+    const formspreeEndpoint = "https://formspree.io/f/xzdovpyk"; // User's Formspree endpoint
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('form_type', 'Newsletter Subscription'); // Add a field to identify the form type
+
+    fetch(formspreeEndpoint, {
+      method: "POST",
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      if (response.ok) {
+        showToast("Thank you! Your subscription request has been sent.");
+        document.getElementById("newsletter-email").value = ''; // Clear the email field
+      } else {
+        response.json().then(data => {
+          if (data.errors) {
+            let errorMessage = "Subscription failed: ";
+            data.errors.forEach(error => { errorMessage += `${error.message} `; });
+            showToast(errorMessage.trim());
+          } else {
+            showToast("Subscription failed. Please try again.");
+          }
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error subscribing to newsletter:', error);
+      showToast("Network error. Please check your connection and try again.");
+    });
+  }
+
+  function showToast(message) { // Moved showToast to a consistent position
+    var t = document.getElementById("toast");
+    t.textContent = message;
+    t.className = "show";
+    setTimeout(function(){ t.className = t.className.replace("show", ""); }, 3000);
+  }
   buildSidebar();
   renderNews();
 

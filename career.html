@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lawrence&Partners – Career</title>
 <link rel="icon" type="image/png" href="/assets/img/favicon.ico">
+<link rel="preload" href="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80&fm=webp" as="image">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Georgia, 'Times New Roman', serif; background: #fff; color: #111; line-height: 1.6; }
@@ -20,7 +21,10 @@
   .nav-right { display: flex; align-items: center; gap: 0.5rem; }
   .lang { font-family: Arial, sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.5); cursor: pointer; }
   .lang.active { color: #fff; font-weight: 600; }
-  .lang-sep { color: rgba(255,255,255,0.25); font-size: 0.75rem; }
+  #toast { visibility: hidden; min-width: 250px; background: #0a0a0a; color: #fff; text-align: center; border-radius: 2px; padding: 16px; position: fixed; z-index: 10000; left: 50%; bottom: 30px; transform: translateX(-50%); font-family: Arial, sans-serif; font-size: 0.85rem; border: 1px solid #c0392b; }
+  #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+  @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+  @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
   .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: 0.5rem; }
   .hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: all 0.3s; }
   .mobile-menu { display: none; background: rgba(10,10,10,0.98); border-top: 1px solid rgba(255,255,255,0.08); padding: 1rem 2rem 1.5rem; }
@@ -28,7 +32,8 @@
   .mobile-menu.open { display: block; }
 
   .page-hero { position: relative; height: 340px; background: #0a0a0a; display: flex; align-items: flex-end; overflow: hidden; }
-  .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80'); background-size: cover; background-position: center; opacity: 0.25; }
+  .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80'); background-size: cover; background-position: center; opacity: 0.25; }
+  .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80&fm=webp'); background-size: cover; background-position: center; opacity: 0.25; }
   .page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.9) 40%, rgba(0,0,0,0.3) 100%); }
   .page-hero-content { position: relative; z-index: 2; max-width: 1400px; width: 100%; margin: 0 auto; padding: 2rem 2rem 2.5rem; }
   .page-label { font-family: Arial, sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #c0392b; margin-bottom: 0.5rem; }
@@ -40,34 +45,27 @@
   .h2 { font-family: Georgia, serif; font-size: 2rem; font-weight: 400; color: #0a0a0a; line-height: 1.3; margin-bottom: 1.25rem; }
   .para { font-family: Arial, sans-serif; font-size: 0.88rem; color: #4b5563; line-height: 1.85; margin-bottom: 1rem; }
   .intro-img { width: 100%; height: 400px; object-fit: cover; }
+  .intro-img { width: 100%; height: 400px; object-fit: cover; loading="lazy" decoding="async"; }
 
   .perks-section { background: #0a0a0a; padding: 5rem 2rem; }
   .perks-inner { max-width: 1400px; margin: 0 auto; }
   .perks-label { font-size: 0.65rem; font-family: Arial, sans-serif; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #c0392b; margin-bottom: 0.75rem; }
   .perks-title { font-family: Georgia, serif; font-size: 2rem; font-weight: 400; color: #fff; margin-bottom: 3rem; }
   .perks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.08); }
-  .perk-card { background: #0a0a0a; padding: 2.5rem 2rem; transition: background 0.2s; }
-  .perk-card:hover { background: rgba(255,255,255,0.03); }
+  .perk-card { background: #0a0a0a; padding: 2.5rem 2rem; }
   .perk-icon { font-size: 1.5rem; margin-bottom: 1rem; }
   .perk-title { font-family: Georgia, serif; font-size: 1rem; color: #fff; margin-bottom: 0.6rem; }
   .perk-desc { font-family: Arial, sans-serif; font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
 
   .openings-section { max-width: 1400px; margin: 0 auto; padding: 5rem 2rem; }
   .openings-subtitle { font-family: Arial, sans-serif; font-size: 0.85rem; color: #6b7280; margin-bottom: 2.5rem; }
-  .opening-row { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 1.75rem; border: 1px solid #e5e7eb; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.2s; background: #fff; }
-  .opening-row:hover { border-color: #c0392b; background: #fff9f9; }
+  .opening-row { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 1.75rem; border: 1px solid #e5e7eb; margin-bottom: 0.5rem; background: #fff; }
   .opening-title { font-family: Georgia, serif; font-size: 1rem; color: #111827; margin-bottom: 0.35rem; }
   .opening-meta { display: flex; gap: 1rem; flex-wrap: wrap; }
   .opening-tag { font-family: Arial, sans-serif; font-size: 0.7rem; color: #6b7280; }
   .type-badge { font-family: Arial, sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.2rem 0.55rem; background: #f3f4f6; color: #374151; }
   .apply-btn { padding: 0.6rem 1.25rem; background: #c0392b; border: none; color: #fff; font-family: Arial, sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
   .apply-btn:hover { background: #a93226; }
-
-  .cta-band { background: #f8f8f8; padding: 4rem 2rem; text-align: center; border-top: 1px solid #e5e7eb; }
-  .cta-band h3 { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 400; color: #0a0a0a; margin-bottom: 0.75rem; }
-  .cta-band p { font-family: Arial, sans-serif; font-size: 0.85rem; color: #6b7280; margin-bottom: 1.5rem; }
-  .cta-btn { padding: 0.85rem 2rem; background: #0a0a0a; border: none; color: #fff; font-family: Arial, sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
-  .cta-btn:hover { background: #222; }
 
   footer { background: #0a0a0a; color: rgba(255,255,255,0.7); padding: 4rem 0 2rem; border-top: 1px solid rgba(255,255,255,0.06); }
   .footer-inner { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
@@ -113,7 +111,7 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="nav-right">
-      <span class="lang active">EN</span><span class="lang-sep">|</span><span class="lang">TR</span>
+      <img src="https://flagcdn.com/w2560/tr.png" alt="Turkey Flag" style="height: 20px; width: auto; display: block;">
       <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -136,13 +134,13 @@
 
 <div class="intro-section">
   <div>
-    <div class="section-label">Why Paksoy</div>
+    <div class="section-label">Why Lawrence&Partners</div>
     <h2 class="h2">A place to build an exceptional legal career</h2>
     <p class="para">At Lawrence&Partners, we invest in our people as much as we invest in our clients. We believe that our professionals are our greatest asset, and we are committed to creating an environment where talent thrives, skills develop, and careers flourish.</p>
     <p class="para">Our lawyers work on the most complex and high-profile transactions in Turkey, gaining exposure to cross-border matters that few other firms can offer. We are committed to continuous training, mentorship and career development at every level.</p>
   </div>
   <div>
-    <img class="intro-img" src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80" alt="Lawrence and partner LAW CONSULTİNG Team">
+    <img class="intro-img" src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&q=80" alt="Lawrence and partner LAW CONSULTİNG Team">
   </div>
 </div>
 
@@ -168,12 +166,6 @@
   <div id="openingsList"></div>
 </div>
 
-<div class="cta-band">
-  <h3>Don't see a suitable role?</h3>
-  <p>Send us your CV and we'll be in touch when a suitable position becomes available.</p>
-  <button class="cta-btn">Send Speculative Application &rarr;</button>
-</div>
-
 <footer>
   <div class="footer-inner">
     <div>
@@ -184,7 +176,7 @@
         T: +90 850 540 4079
       </div>
       <p class="footer-newsletter-label">Sign up for our newsletter</p>
-      <form class="newsletter-form" onsubmit="return false;"><input class="newsletter-input" type="email" placeholder="Email address"><button class="newsletter-btn" type="submit">Subscribe</button></form>
+      <form class="newsletter-form" onsubmit="subscribeNewsletter(event)"><input id="newsletter-email" class="newsletter-input" type="email" placeholder="Email address" required><button class="newsletter-btn" type="submit">Subscribe</button></form>
     </div>
     <div class="footer-col"><h4>Explore Our Firm</h4><ul><li><a href="about.html">› About Us</a></li><li><a href="practices.html">› Our Practices</a></li><li><a href="team.html">› Team</a></li><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li><li><a href="career.html">› Career</a></li><li><a href="contact.html">› Contact</a></li></ul></div>
     <div class="footer-col"><h4>News &amp; Publications</h4><ul><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li></ul></div>
@@ -192,6 +184,8 @@
   </div>
   <div class="footer-bottom"><p>&copy; 2026 Lawrence&Partners. All rights reserved.</p><div class="footer-links"><a href="terms.html#privacy">Privacy Policy</a><a href="terms.html#cookies">Cookie Policy</a><a href="terms.html#terms">Terms of Use</a></div></div>
 </footer>
+
+<div id="toast">Thank you! Your subscription request has been sent.</div>
 
 <div id="cookieBanner" style="position:fixed;bottom:0;width:100%;background:#0a0a0a;color:#fff;padding:12px;text-align:center;z-index:9999;border-top:1px solid rgba(255,255,255,0.1);display:none;font-family:Arial,sans-serif;font-size:0.85rem;">
   This website uses cookies to improve your experience.
@@ -231,25 +225,53 @@
       '<span class="opening-tag">&#8987; ' + o.exp + '</span>' +
       '<span class="type-badge">' + o.type + '</span>' +
       '</div></div>' +
-      '<button class="apply-btn">Apply Now &rarr;</button>';
+      '<button class="apply-btn" onclick="location.href=\'apply.html?position=' + encodeURIComponent(o.title) + '\'">Apply Now &rarr;</button>';
     list.appendChild(row);
   });
 
-  var langs = document.querySelectorAll('.lang');
-  var savedLang = localStorage.getItem('selectedLanguage');
-  if (savedLang) {
-    langs.forEach(function(l) {
-      l.classList.remove('active');
-      if (l.textContent === savedLang) l.classList.add('active');
+  function showToast(message) {
+    var t = document.getElementById("toast");
+    t.textContent = message;
+    t.className = "show";
+    setTimeout(function(){ t.className = t.className.replace("show", ""); }, 3000);
+  }
+
+  function subscribeNewsletter(e) {
+    e.preventDefault();
+    var emailInput = document.getElementById("newsletter-email");
+    var email = emailInput.value;
+    const formspreeEndpoint = "https://formspree.io/f/xzdovpyk";
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('form_type', 'Newsletter Subscription');
+
+    fetch(formspreeEndpoint, {
+      method: "POST",
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      if (response.ok) {
+        showToast("Thank you! Your subscription request has been sent.");
+        emailInput.value = '';
+      } else {
+        response.json().then(data => {
+          if (data.errors) {
+            let errorMessage = "Subscription failed: ";
+            data.errors.forEach(error => { errorMessage += `${error.message} `; });
+            showToast(errorMessage.trim());
+          } else {
+            showToast("Subscription failed. Please try again.");
+          }
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error subscribing to newsletter:', error);
+      showToast("Network error. Please check your connection and try again.");
     });
   }
-  langs.forEach(function(lang) {
-    lang.addEventListener('click', function() {
-      langs.forEach(function(l) { l.classList.remove('active'); });
-      this.classList.add('active');
-      localStorage.setItem('selectedLanguage', this.textContent);
-    });
-  });
 
   function setCookie(name, value, days) {
     var expires = "";

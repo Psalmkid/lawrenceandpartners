@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lawrence&Partners – Our Practices</title>
 <link rel="icon" type="image/png" href="/assets/img/favicon.ico">
+<link rel="preload" href="https://images.unsplash.com/photo-1453722913170-6b127c9f73ad?w=1600&q=80&fm=webp" as="image">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Georgia, 'Times New Roman', serif; background: #fff; color: #111; line-height: 1.6; }
@@ -20,7 +21,10 @@
   .nav-right { display: flex; align-items: center; gap: 0.5rem; }
   .lang { font-family: Arial, sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.5); cursor: pointer; }
   .lang.active { color: #fff; font-weight: 600; }
-  .lang-sep { color: rgba(255,255,255,0.25); font-size: 0.75rem; }
+  #toast { visibility: hidden; min-width: 250px; background: #0a0a0a; color: #fff; text-align: center; border-radius: 2px; padding: 16px; position: fixed; z-index: 10000; left: 50%; bottom: 30px; transform: translateX(-50%); font-family: Arial, sans-serif; font-size: 0.85rem; border: 1px solid #c0392b; }
+  #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+  @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+  @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
   .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: 0.5rem; }
   .hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: all 0.3s; }
   .mobile-menu { display: none; background: rgba(10,10,10,0.98); border-top: 1px solid rgba(255,255,255,0.08); padding: 1rem 2rem 1.5rem; }
@@ -28,7 +32,7 @@
   .mobile-menu.open { display: block; }
 
   .page-hero { position: relative; height: 340px; background: #0a0a0a; display: flex; align-items: flex-end; overflow: hidden; padding-top: 72px; }
-  .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80'); background-size: cover; background-position: center 40%; opacity: 0.55; }
+  .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1453722913170-6b127c9f73ad?w=1600&q=80&fm=webp'); background-size: cover; background-position: center 40%; opacity: 0.55; }
   .page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.1) 100%); }
   .page-hero-content { position: relative; z-index: 2; max-width: 1400px; width: 100%; margin: 0 auto; padding: 2rem 2rem 2.5rem; }
   .breadcrumb { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.75rem; }
@@ -44,13 +48,9 @@
 
   .grid-wrap { max-width: 1400px; margin: 0 auto 6rem; padding: 0 2rem; }
   .practices-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid #e5e7eb; border-left: 1px solid #e5e7eb; }
-  .practice-card { border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; cursor: pointer; overflow: hidden; transition: all 0.3s; position: relative; }
+  .practice-card { border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; overflow: hidden; position: relative; }
   .card-img-wrap { overflow: hidden; height: 180px; position: relative; }
   .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-  .practice-card:hover .card-img-wrap img { transform: scale(1.05); }
-  .card-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(192,57,43,0.75); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
-  .practice-card:hover .card-overlay { opacity: 1; }
-  .card-overlay span { color: #fff; font-family: Arial, sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
   .card-body { padding: 1.25rem 1.5rem; }
   .card-title { font-family: Georgia, serif; font-size: 0.95rem; color: #111827; margin-bottom: 0.5rem; line-height: 1.4; }
   .card-desc { font-family: Arial, sans-serif; font-size: 0.78rem; color: #9ca3af; line-height: 1.6; }
@@ -101,7 +101,7 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="nav-right">
-      <span class="lang active">EN</span><span class="lang-sep">|</span><span class="lang">TR</span>
+      <img src="https://flagcdn.com/w2560/tr.png" alt="Turkey Flag" style="height: 20px; width: auto; display: block;">
       <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -148,7 +148,7 @@
         T: +90 850 540 4079
       </div>
       <p class="footer-newsletter-label">Sign up for our newsletter</p>
-      <form class="newsletter-form" onsubmit="return false;"><input class="newsletter-input" type="email" placeholder="Email address"><button class="newsletter-btn" type="submit">Subscribe</button></form>
+      <form class="newsletter-form" onsubmit="subscribeNewsletter(event)"><input id="newsletter-email" class="newsletter-input" type="email" placeholder="Email address" required><button class="newsletter-btn" type="submit">Subscribe</button></form>
     </div>
     <div class="footer-col"><h4>Explore Our Firm</h4><ul><li><a href="about.html">› About Us</a></li><li><a href="practices.html">› Our Practices</a></li><li><a href="team.html">› Team</a></li><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li><li><a href="career.html">› Career</a></li><li><a href="contact.html">› Contact</a></li></ul></div>
     <div class="footer-col"><h4>News &amp; Publications</h4><ul><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li></ul></div>
@@ -156,6 +156,8 @@
   </div>
   <div class="footer-bottom"><p>&copy; 2026 Lawrence&Partners. All rights reserved.</p><div class="footer-links"><a href="terms.html#privacy">Privacy Policy</a><a href="terms.html#cookies">Cookie Policy</a><a href="terms.html#terms">Terms of Use</a></div></div>
 </footer>
+
+<div id="toast">Thank you! Your subscription request has been sent.</div>
 
 <div id="cookieBanner" style="position:fixed;bottom:0;width:100%;background:#0a0a0a;color:#fff;padding:12px;text-align:center;z-index:9999;border-top:1px solid rgba(255,255,255,0.1);display:none;font-family:Arial,sans-serif;font-size:0.85rem;">
   This website uses cookies to improve your experience.
@@ -176,50 +178,76 @@
   });
 
   var practices = [
-    { name: 'Antitrust and Competition', img: 'https://paksoy.av.tr/wp-content/uploads/2024/06/antitrust-competition-uai-2550x1434.jpg', desc: 'Advising on Turkish and EU competition law, merger control, cartel investigations, and regulatory compliance matters.' },
-    { name: 'Aviation', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/aviation-uai-2550x1434.jpg', desc: 'Comprehensive aviation law services including aircraft financing, leasing, regulatory advice, and dispute resolution.' },
-    { name: 'Banking and Finance', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/banking-finance-uai-2550x1434.jpg', desc: 'Full-service banking and finance practice covering loan transactions, securitization, and restructuring.' },
-    { name: 'Capital Markets', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/capital-markets-uai-2550x1434.jpg', desc: 'Advising on equity and debt capital markets transactions, IPOs, bond issuances, and regulatory compliance.' },
-    { name: 'Compliance and Investigations', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/compliance-investigations-uai-2550x1434.jpg', desc: 'Internal investigations, anti-corruption compliance programs, and regulatory investigations support.' },
-    { name: 'Corporate and Commercial', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/corporate-commercial-uai-2550x1434.jpg', desc: 'Broad corporate advisory services spanning company formation, joint ventures, commercial contracts, and governance.' },
-    { name: 'Data Privacy and Cyber Security', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/data-privacy-uai-2550x1434.jpg', desc: 'GDPR and KVKK compliance, data breach response, cybersecurity policies, and technology law advisory.' },
-    { name: 'Dispute Resolution, Litigation and Arbitration', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/dispute-resolution-uai-2550x1434.jpg', desc: 'Representation in domestic and international commercial arbitration, litigation, and alternative dispute resolution.' },
-    { name: 'Energy, Infrastructure and Projects', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/energy-infrastructure-uai-2550x1434.jpg', desc: 'Legal services for energy projects, infrastructure development, PPPs, and regulatory frameworks.' },
-    { name: 'FinTech', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/fintech-uai-2550x1434.jpg', desc: 'Legal support for financial technology companies, payment systems, blockchain, and digital asset regulation.' },
-    { name: 'Healthcare and Life Sciences', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/healthcare-uai-2550x1434.jpg', desc: 'Regulatory, transactional, and dispute resolution services for healthcare, pharmaceuticals, and medical devices.' },
-    { name: 'Intellectual Property', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/intellectual-property-uai-2550x1434.jpg', desc: 'Protection and enforcement of trademarks, patents, copyrights, and trade secrets in Turkey and internationally.' },
-    { name: 'Islamic Finance', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/islamic-finance-uai-2550x1434.jpg', desc: 'Structuring and advising on Sharia-compliant financial instruments, sukuk, and participation banking.' },
-    { name: 'Labour and Employment', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/labour-employment-uai-2550x1434.jpg', desc: 'Employment law advisory, workplace investigations, executive compensation, and employment dispute resolution.' },
-    { name: 'Mergers and Acquisitions', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/mergers-acquisitions-uai-2550x1434.jpg', desc: 'Comprehensive M&A advisory for domestic and cross-border transactions, due diligence, and deal structuring.' },
-    { name: 'Real Estate and Construction', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/real-estate-uai-2550x1434.jpg', desc: 'Real estate acquisitions, development projects, construction contracts, and real estate finance.' },
-    { name: 'Restructuring and Insolvency', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/restructuring-uai-2550x1434.jpg', desc: 'Advising on financial restructuring, debt workouts, insolvency proceedings, and creditor rights.' },
-    { name: 'Tax and Fiscal Services', img: 'https://paksoy.av.tr/wp-content/uploads/2024/05/tax-uai-2550x1434.jpg', desc: 'Turkish tax law advisory, tax planning, transfer pricing, and representation in tax disputes.' }
+    { name: 'Antitrust and Competition', img: 'https://images.unsplash.com/photo-1505664194779-8beceb93744e?w=800&q=80', desc: 'Advising on Turkish and EU competition law, merger control, cartel investigations, and regulatory compliance matters.' },
+    { name: 'Aviation', img: 'https://images.unsplash.com/photo-1436491865332-7a61a109c0f2?w=800&q=80', desc: 'Comprehensive aviation law services including aircraft financing, leasing, regulatory advice, and dispute resolution.' },
+    { name: 'Banking and Finance', img: 'https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?w=800&q=80', desc: 'Full-service banking and finance practice covering loan transactions, securitization, and restructuring.' },
+    { name: 'Capital Markets', img: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80', desc: 'Advising on equity and debt capital markets transactions, IPOs, bond issuances, and regulatory compliance.' },
+    { name: 'Compliance and Investigations', img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80', desc: 'Internal investigations, anti-corruption compliance programs, and regulatory investigations support.' },
+    { name: 'Corporate and Commercial', img: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=80', desc: 'Broad corporate advisory services spanning company formation, joint ventures, commercial contracts, and governance.' },
+    { name: 'Data Privacy and Cyber Security', img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80', desc: 'GDPR and KVKK compliance, data breach response, cybersecurity policies, and technology law advisory.' },
+    { name: 'Dispute Resolution, Litigation and Arbitration', img: 'https://images.unsplash.com/photo-1589994160839-163cd2b5fd9f?w=800&q=80', desc: 'Representation in domestic and international commercial arbitration, litigation, and alternative dispute resolution.' },
+    { name: 'Energy, Infrastructure and Projects', img: 'https://images.unsplash.com/photo-1466611668177-352326c30235?w=800&q=80', desc: 'Legal services for energy projects, infrastructure development, PPPs, and regulatory frameworks.' },
+    { name: 'FinTech', img: 'https://images.unsplash.com/photo-1554260670-381846cb0930?w=800&q=80', desc: 'Legal support for financial technology companies, payment systems, blockchain, and digital asset regulation.' },
+    { name: 'Healthcare and Life Sciences', img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80', desc: 'Regulatory, transactional, and dispute resolution services for healthcare, pharmaceuticals, and medical devices.' },
+    { name: 'Intellectual Property', img: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&q=80', desc: 'Protection and enforcement of trademarks, patents, copyrights, and trade secrets in Turkey and internationally.' },
+    { name: 'Islamic Finance', img: 'https://images.unsplash.com/photo-1563986768605-e42528f72f04?w=800&q=80', desc: 'Structuring and advising on Sharia-compliant financial instruments, sukuk, and participation banking.' },
+    { name: 'Labour and Employment', img: 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&q=80', desc: 'Employment law advisory, workplace investigations, executive compensation, and employment dispute resolution.' },
+    { name: 'Mergers and Acquisitions', img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80', desc: 'Comprehensive M&A advisory for domestic and cross-border transactions, due diligence, and deal structuring.' },
+    { name: 'Real Estate and Construction', img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80', desc: 'Real estate acquisitions, development projects, construction contracts, and real estate finance.' },
+    { name: 'Restructuring and Insolvency', img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80', desc: 'Advising on financial restructuring, debt workouts, insolvency proceedings, and creditor rights.' },
+    { name: 'Tax and Fiscal Services', img: 'https://images.unsplash.com/photo-1554224155-8d04cb218791?w=800&q=80', desc: 'Turkish tax law advisory, tax planning, transfer pricing, and representation in tax disputes.' }
   ];
 
   var grid = document.getElementById('practicesGrid');
   practices.forEach(function(p) {
     var card = document.createElement('div');
     card.className = 'practice-card';
-    card.innerHTML = '<div class="card-img-wrap"><img src="' + p.img + '" alt="' + p.name + '" onerror="this.src=\'https://images.unsplash.com/photo-1589578228447-e1a4e481c6c8?w=600&q=80\'"><div class="card-overlay"><span>Learn More &rarr;</span></div></div><div class="card-body"><div class="card-title">' + p.name + '</div><div class="card-desc">' + p.desc + '</div></div>';
+    card.innerHTML = '<div class="card-img-wrap"><img src="' + p.img + '" alt="' + p.name + '" loading="lazy" decoding="async" onerror="this.src=\'https://images.unsplash.com/photo-1589578228447-e1a4e481c6c8?w=600&q=60&fm=webp\'"></div><div class="card-body"><div class="card-title">' + p.name + '</div><div class="card-desc">' + p.desc + '</div></div>';
     grid.appendChild(card);
   });
 
-  var langs = document.querySelectorAll('.lang');
-  var savedLang = localStorage.getItem('selectedLanguage');
-  if (savedLang) {
-    langs.forEach(function(l) {
-      l.classList.remove('active');
-      if (l.textContent === savedLang) l.classList.add('active');
+  function subscribeNewsletter(e) {
+    e.preventDefault();
+    var email = document.getElementById("newsletter-email").value;
+    const formspreeEndpoint = "https://formspree.io/f/xzdovpyk"; // User's Formspree endpoint
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('form_type', 'Newsletter Subscription'); // Add a field to identify the form type
+
+    fetch(formspreeEndpoint, {
+      method: "POST",
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      if (response.ok) {
+        showToast("Thank you! Your subscription request has been sent.");
+        document.getElementById("newsletter-email").value = ''; // Clear the email field
+      } else {
+        response.json().then(data => {
+          if (data.errors) {
+            let errorMessage = "Subscription failed: ";
+            data.errors.forEach(error => { errorMessage += `${error.message} `; });
+            showToast(errorMessage.trim());
+          } else {
+            showToast("Subscription failed. Please try again.");
+          }
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error subscribing to newsletter:', error);
+      showToast("Network error. Please check your connection and try again.");
     });
   }
-  langs.forEach(function(lang) {
-    lang.addEventListener('click', function() {
-      langs.forEach(function(l) { l.classList.remove('active'); });
-      this.classList.add('active');
-      localStorage.setItem('selectedLanguage', this.textContent);
-    });
-  });
 
+  function showToast(message) {
+    var t = document.getElementById("toast");
+    t.textContent = message;
+    t.className = "show";
+    setTimeout(function(){ t.className = t.className.replace("show", ""); }, 3000);
+  }
   function setCookie(name, value, days) {
     var expires = "";
     if (days) {

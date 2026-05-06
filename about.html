@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lawrence&Partners – About Us</title>
 <link rel="icon" type="image/png" href="/assets/img/favicon.ico">
+<link rel="preload" href="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1600&q=80&fm=webp" as="image">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Georgia, 'Times New Roman', serif; background: #fff; color: #111; line-height: 1.6; }
@@ -20,7 +21,10 @@
   .nav-right { display: flex; align-items: center; gap: 0.5rem; }
   .lang { font-family: Arial, sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.5); cursor: pointer; }
   .lang.active { color: #fff; font-weight: 600; }
-  .lang-sep { color: rgba(255,255,255,0.25); font-size: 0.75rem; }
+  #toast { visibility: hidden; min-width: 250px; background: #0a0a0a; color: #fff; text-align: center; border-radius: 2px; padding: 16px; position: fixed; z-index: 10000; left: 50%; bottom: 30px; transform: translateX(-50%); font-family: Arial, sans-serif; font-size: 0.85rem; border: 1px solid #c0392b; }
+  #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+  @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+  @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
   .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: 0.5rem; }
   .hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: all 0.3s; }
   .mobile-menu { display: none; background: rgba(10,10,10,0.98); border-top: 1px solid rgba(255,255,255,0.08); padding: 1rem 2rem 1.5rem; }
@@ -28,7 +32,7 @@
   .mobile-menu.open { display: block; }
 
   .page-hero { position: relative; height: 340px; background: #0a0a0a; display: flex; align-items: flex-end; overflow: hidden; padding-top: 72px; }
-  .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1600&q=80'); background-size: cover; background-position: center 30%; opacity: 0.5; }
+  .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1600&q=80&fm=webp'); background-size: cover; background-position: center 30%; opacity: 0.5; }
   .page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.1) 100%); }
   .page-hero-content { position: relative; z-index: 2; max-width: 1400px; width: 100%; margin: 0 auto; padding: 2rem 2rem 2.5rem; }
   .breadcrumb { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.75rem; }
@@ -47,7 +51,7 @@
   .section-label { font-size: 0.65rem; font-family: Arial, sans-serif; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #c0392b; margin-bottom: 0.75rem; }
   h2.h2 { font-family: Georgia, serif; font-size: 2rem; font-weight: 400; color: #0a0a0a; line-height: 1.3; margin-bottom: 1.5rem; }
   .para { font-family: Arial, sans-serif; font-size: 0.88rem; color: #4b5563; line-height: 1.85; margin-bottom: 1.2rem; }
-  .img-full { width: 100%; height: 420px; object-fit: cover; }
+  .img-full { width: 100%; height: 420px; object-fit: cover; loading="lazy" decoding="async"; }
 
   .stats-band { background: #0a0a0a; padding: 4rem 2rem; }
   .stats-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
@@ -120,7 +124,7 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="nav-right">
-      <span class="lang active">EN</span><span class="lang-sep">|</span><span class="lang">TR</span>
+      <img src="https://flagcdn.com/w2560/tr.png" alt="Turkey Flag" style="height: 20px; width: auto; display: block;">
       <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -158,7 +162,7 @@
       <p class="para">Founded in 1997 by Serdar Lawrence, the firm was established with a commitment to providing result-oriented, creative, innovative, fast and high quality legal advice to the local and international businesses at international standards.</p>
     </div>
     <div>
-      <img class="img-full" src="https://paksoy.av.tr/wp-content/uploads/2025/09/about-us-02.webp" alt="Paksoy Office" onerror="this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80'">
+      <img class="img-full" src="https://paksoy.av.tr/wp-content/uploads/2025/09/about-us-02.webp" alt="Lawrence&Partners Office" onerror="this.src='https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80'">
     </div>
   </div>
 </div>
@@ -175,7 +179,7 @@
 <div class="content">
   <div class="two-col" style="align-items:center;">
     <div>
-      <img class="img-full" src="https://paksoy.av.tr/wp-content/uploads/2025/09/about-us-03-uai-2325x1550.webp" alt="Paksoy Team" onerror="this.src='https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80'">
+      <img class="img-full" src="https://paksoy.av.tr/wp-content/uploads/2025/09/about-us-03-uai-2325x1550.webp" alt="Lawrence&Partners Team" onerror="this.src='https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&q=80'">
     </div>
     <div>
       <div class="section-label">Our Foundation and Vision</div>
@@ -217,7 +221,7 @@
     <div>
       <div class="footer-logo">Lawrence&Partners</div>
       <p class="footer-newsletter-label">Sign up for our newsletter</p>
-      <form class="newsletter-form" onsubmit="return false;"><input class="newsletter-input" type="email" placeholder="Email address"><button class="newsletter-btn" type="button">Subscribe</button></form>
+      <form class="newsletter-form" onsubmit="subscribeNewsletter(event)"><input id="newsletter-email" class="newsletter-input" type="email" placeholder="Email address" required><button class="newsletter-btn" type="submit">Subscribe</button></form>
     </div>
     <div class="footer-col"><h4>Explore Our Firm</h4><ul><li><a href="about.html">› About Us</a></li><li><a href="practices.html">› Our Practices</a></li><li><a href="team.html">› Team</a></li><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li><li><a href="career.html">› Career</a></li><li><a href="contact.html">› Contact</a></li></ul></div>
     <div class="footer-col"><h4>News &amp; Publications</h4><ul><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li></ul></div>
@@ -225,6 +229,8 @@
   </div>
   <div class="footer-bottom"><p>&copy; 2026 Lawrence&Partners. All rights reserved.</p><div class="footer-links"><a href="terms.html#privacy">Privacy Policy</a><a href="terms.html#cookies">Cookie Policy</a><a href="terms.html#terms">Terms of Use</a></div></div>
 </footer>
+
+<div id="toast">Thank you! Your subscription request has been sent.</div>
 
 <div id="cookieBanner" style="position:fixed;bottom:0;width:100%;background:#0a0a0a;color:#fff;padding:12px;text-align:center;z-index:9999;border-top:1px solid rgba(255,255,255,0.1);display:none;font-family:Arial,sans-serif;font-size:0.85rem;">
   This website uses cookies to improve your experience.
@@ -244,22 +250,48 @@
     spans[2].style.transform = open ? 'rotate(-45deg) translate(5px,-5px)' : '';
   });
 
-  var langs = document.querySelectorAll('.lang');
-  var savedLang = localStorage.getItem('selectedLanguage');
-  if (savedLang) {
-    langs.forEach(function(l) {
-      l.classList.remove('active');
-      if (l.textContent === savedLang) l.classList.add('active');
+  function subscribeNewsletter(e) {
+    e.preventDefault();
+    var email = document.getElementById("newsletter-email").value;
+    const formspreeEndpoint = "https://formspree.io/f/xzdovpyk"; // User's Formspree endpoint
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('form_type', 'Newsletter Subscription'); // Add a field to identify the form type
+
+    fetch(formspreeEndpoint, {
+      method: "POST",
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      if (response.ok) {
+        showToast("Thank you! Your subscription request has been sent.");
+        document.getElementById("newsletter-email").value = ''; // Clear the email field
+      } else {
+        response.json().then(data => {
+          if (data.errors) {
+            let errorMessage = "Subscription failed: ";
+            data.errors.forEach(error => { errorMessage += `${error.message} `; });
+            showToast(errorMessage.trim());
+          } else {
+            showToast("Subscription failed. Please try again.");
+          }
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error subscribing to newsletter:', error);
+      showToast("Network error. Please check your connection and try again.");
     });
   }
-  langs.forEach(function(lang) {
-    lang.addEventListener('click', function() {
-      langs.forEach(function(l) { l.classList.remove('active'); });
-      this.classList.add('active');
-      localStorage.setItem('selectedLanguage', this.textContent);
-    });
-  });
 
+  function showToast(message) {
+    var t = document.getElementById("toast");
+    t.textContent = message;
+    t.className = "show";
+    setTimeout(function(){ t.className = t.className.replace("show", ""); }, 3000);
+  }
   function setCookie(name, value, days) {
     var expires = "";
     if (days) {

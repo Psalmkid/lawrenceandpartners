@@ -21,6 +21,10 @@
   .lang { font-family: Arial, sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.5); cursor: pointer; }
   .lang.active { color: #fff; font-weight: 600; }
   .lang-sep { color: rgba(255,255,255,0.25); font-size: 0.75rem; }
+  #toast { visibility: hidden; min-width: 250px; background: #0a0a0a; color: #fff; text-align: center; border-radius: 2px; padding: 16px; position: fixed; z-index: 10000; left: 50%; bottom: 30px; transform: translateX(-50%); font-family: Arial, sans-serif; font-size: 0.85rem; border: 1px solid #c0392b; }
+  #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+  @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+  @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
   .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: 0.5rem; }
   .hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: all 0.3s; }
   .mobile-menu { display: none; background: rgba(10,10,10,0.98); border-top: 1px solid rgba(255,255,255,0.08); padding: 1rem 2rem 1.5rem; }
@@ -44,16 +48,13 @@
   .sidebar-option.active .sidebar-dot { border-color: #c0392b; background: #c0392b; }
 
   .results-count { font-family: Arial, sans-serif; font-size: 0.8rem; color: #9ca3af; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 2px solid #0a0a0a; }
-  .pub-card { display: flex; gap: 1.5rem; padding: 2rem 0; border-bottom: 1px solid #f3f4f6; cursor: pointer; }
-  .pub-card:hover .pub-title { color: #c0392b; }
+  .pub-card { display: flex; gap: 1.5rem; padding: 2rem 0; border-bottom: 1px solid #f3f4f6; }
   .pub-type-col { min-width: 90px; display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; padding-top: 3px; }
   .pub-badge { font-family: Arial, sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; padding: 0.2rem 0.5rem; white-space: nowrap; }
   .pub-date { font-family: Arial, sans-serif; font-size: 0.7rem; color: #9ca3af; }
-  .pub-title { font-family: Georgia, serif; font-size: 1rem; color: #111827; line-height: 1.5; margin-bottom: 0.5rem; transition: color 0.2s; }
+  .pub-title { font-family: Georgia, serif; font-size: 1rem; color: #111827; line-height: 1.5; margin-bottom: 0.5rem; }
   .pub-area { font-family: Arial, sans-serif; font-size: 0.72rem; color: #6b7280; margin-bottom: 0.6rem; }
   .pub-desc { font-family: Arial, sans-serif; font-size: 0.8rem; color: #4b5563; line-height: 1.65; }
-  .download-link { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.75rem; font-family: Arial, sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #2563a8; cursor: pointer; }
-  .download-link:hover { text-decoration: underline; }
 
   footer { background: #0a0a0a; color: rgba(255,255,255,0.7); padding: 4rem 0 2rem; border-top: 1px solid rgba(255,255,255,0.06); }
   .footer-inner { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
@@ -100,7 +101,7 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="nav-right">
-      <span class="lang active">EN</span><span class="lang-sep">|</span><span class="lang">TR</span>
+      <img src="https://flagcdn.com/w2560/tr.png" alt="Turkey Flag" style="height: 20px; width: auto; display: block;">
       <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -138,6 +139,7 @@
       </div>
       <p class="footer-newsletter-label">Sign up for our newsletter</p>
       <form class="newsletter-form" onsubmit="return false;"><input class="newsletter-input" type="email" placeholder="Email address"><button class="newsletter-btn" type="submit">Subscribe</button></form>
+      <form class="newsletter-form" onsubmit="subscribeNewsletter(event)"><input id="newsletter-email" class="newsletter-input" type="email" placeholder="Email address" required><button class="newsletter-btn" type="submit">Subscribe</button></form>
     </div>
     <div class="footer-col"><h4>Explore Our Firm</h4><ul><li><a href="about.html">› About Us</a></li><li><a href="practices.html">› Our Practices</a></li><li><a href="team.html">› Team</a></li><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li><li><a href="career.html">› Career</a></li><li><a href="contact.html">› Contact</a></li></ul></div>
     <div class="footer-col"><h4>News &amp; Publications</h4><ul><li><a href="news.html">› News</a></li><li><a href="publications.html">› Publications</a></li><li><a href="events.html">› Events</a></li></ul></div>
@@ -145,6 +147,8 @@
   </div>
   <div class="footer-bottom"><p>&copy; 2026 Lawrence&Partners. All rights reserved.</p><div class="footer-links"><a href="terms.html#privacy">Privacy Policy</a><a href="terms.html#cookies">Cookie Policy</a><a href="terms.html#terms">Terms of Use</a></div></div>
 </footer>
+
+<div id="toast">Thank you! Your subscription request has been sent.</div>
 
 <div id="cookieBanner" style="position:fixed;bottom:0;width:100%;background:#0a0a0a;color:#fff;padding:12px;text-align:center;z-index:9999;border-top:1px solid rgba(255,255,255,0.1);display:none;font-family:Arial,sans-serif;font-size:0.85rem;">
   This website uses cookies to improve your experience.
@@ -167,6 +171,12 @@
   var typeColors = { Newsletter: '#1e3a5f', Article: '#2d6a4f', Briefing: '#c0392b', Report: '#7b5c00' };
 
   var publications = [
+    { date: 'May 2026', title: 'New Regulations on Crowdfunding in Turkey', type: 'Briefing', area: 'Capital Markets', desc: 'An overview of the recent secondary legislation published by the CMB regarding equity-based and debt-based crowdfunding platforms.' },
+    { date: 'May 2026', title: 'Navigating ESG Compliance for Turkish Companies', type: 'Article', area: 'Corporate and Commercial', desc: 'Guidelines for Turkish companies to align with global ESG standards and reporting requirements under the updated Sustainability Principles Compliance Framework.' },
+    { date: 'May 2026', title: 'Fintech and Open Banking: A New Era in Turkish Finance', type: 'Article', area: 'Banking and Finance', desc: 'Discussing the implementation of open banking standards in Turkey and the regulatory roadmap for payment service providers.' },
+    { date: 'May 2026', title: 'Energy Storage Systems: Legal Framework and Opportunities', type: 'Briefing', area: 'Energy, Infrastructure and Projects', desc: 'An analysis of the new regulation on energy storage in Turkey and its impact on renewable energy investment models.' },
+    { date: 'May 2026', title: 'The Evolving Landscape of Digital Service Tax in Turkey', type: 'Article', area: 'Tax and Fiscal Services', desc: 'Reviewing recent administrative practices and audit trends related to Digital Service Tax and its implications for multinational tech firms.' },
+    { date: 'May 2026', title: 'Cross-Border M&A: Managing Regulatory Risks in 2026', type: 'Report', area: 'Mergers and Acquisitions', desc: 'A strategic report on navigating foreign direct investment (FDI) screenings and merger control procedures in cross-border transactions involving Turkish assets.' },
     { date: 'April 2026', title: 'Turkish Competition Law Review – Q1 2026', type: 'Newsletter', area: 'Antitrust and Competition', desc: 'A comprehensive review of Turkish Competition Board decisions and developments in Q1 2026, covering cartel enforcement, merger control, and dominance cases.' },
     { date: 'April 2026', title: 'No-Poach Agreements and Wage Data Exchange in Pharma: Competition Law Implications', type: 'Article', area: 'Antitrust and Competition', desc: 'Analysis of the Turkish Competition Board\'s landmark decision fining pharmaceutical companies for no-poach and wage data exchange arrangements.' },
     { date: 'April 2026', title: 'Just Cause Termination in Disciplinary Investigations', type: 'Article', area: 'Labour and Employment', desc: 'Examination of Turkish Labour Law provisions governing just cause termination in the context of employer disciplinary investigations, with reference to recent Court of Cassation decisions.' },
@@ -206,7 +216,7 @@
     list.innerHTML = filtered.map(function(p) {
       var color = typeColors[p.type] || '#c0392b';
       return '<div class="pub-card"><div class="pub-type-col"><div class="pub-badge" style="background:' + color + '">' + p.type + '</div><div class="pub-date">' + p.date + '</div></div>' +
-        '<div><div class="pub-title">' + p.title + '</div><div class="pub-area">' + p.area + '</div><div class="pub-desc">' + p.desc + '</div><div class="download-link">&#8595; Download PDF</div></div></div>';
+        '<div><div class="pub-title">' + p.title + '</div><div class="pub-area">' + p.area + '</div><div class="pub-desc">' + p.desc + '</div></div></div>';
     }).join('');
   }
 
@@ -217,6 +227,49 @@
       l.classList.remove('active');
       if (l.textContent === savedLang) l.classList.add('active');
     });
+  }
+
+  function subscribeNewsletter(e) {
+    e.preventDefault();
+    var email = document.getElementById("newsletter-email").value;
+    const formspreeEndpoint = "https://formspree.io/f/xzdovpyk"; // User's Formspree endpoint
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('form_type', 'Newsletter Subscription'); // Add a field to identify the form type
+
+    fetch(formspreeEndpoint, {
+      method: "POST",
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      if (response.ok) {
+        showToast("Thank you! Your subscription request has been sent.");
+        document.getElementById("newsletter-email").value = ''; // Clear the email field
+      } else {
+        response.json().then(data => {
+          if (data.errors) {
+            let errorMessage = "Subscription failed: ";
+            data.errors.forEach(error => { errorMessage += `${error.message} `; });
+            showToast(errorMessage.trim());
+          } else {
+            showToast("Subscription failed. Please try again.");
+          }
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error subscribing to newsletter:', error);
+      showToast("Network error. Please check your connection and try again.");
+    });
+  }
+
+  function showToast(message) { // Moved showToast to a consistent position
+    var t = document.getElementById("toast");
+    t.textContent = message;
+    t.className = "show";
+    setTimeout(function(){ t.className = t.className.replace("show", ""); }, 3000);
   }
   langs.forEach(function(lang) {
     lang.addEventListener('click', function() {
