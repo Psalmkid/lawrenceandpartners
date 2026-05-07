@@ -4,33 +4,132 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lawrence&Partners – Apply</title>
+<link rel="icon" type="image/png" href="/assets/img/favicon.ico">
 <style>
   /* No hero background image on this page, so no preload needed */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Georgia, serif; background: #fff; color: #111; line-height: 1.6; padding-top: 72px; }
-  header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,10,10,0.97); height: 72px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  a { text-decoration: none; color: inherit; outline: none; -webkit-tap-highlight-color: transparent; }
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,10,10,0.97); height: 72px; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); transition: all 0.3s; }
   nav { max-width: 1400px; margin: 0 auto; width: 100%; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
   .logo { font-size: 1.5rem; font-weight: 700; color: #fff; text-decoration: none; }
   .apply-container { max-width: 700px; margin: 5rem auto; padding: 0 2rem; }
   .section-label { font-size: 0.65rem; font-family: Arial, sans-serif; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #c0392b; margin-bottom: 0.75rem; }
   h1 { font-size: 2rem; font-weight: 400; margin-bottom: 2rem; }
-  .form-group { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-group { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; transition: all 0.3s ease; }
   label { font-family: Arial, sans-serif; font-size: 0.8rem; font-weight: 600; color: #374151; }
-  input[type="text"], input[type="email"], input[type="file"] { padding: 0.75rem; border: 1px solid #d1d5db; font-family: Arial, sans-serif; font-size: 0.9rem; outline: none; }
+  input[type="text"], input[type="email"], input[type="file"] { padding: 0.75rem 1.25rem; border: 1px solid #d1d5db; font-family: Arial, sans-serif; font-size: 0.9rem; outline: none; border-radius: 30px; }
   input:focus { border-color: #c0392b; }
-  input[readonly] { background: #f3f4f6; color: #6b7280; border-color: #e5e7eb; cursor: not-allowed; }
-  .submit-btn { padding: 1rem; background: #c0392b; color: #fff; border: none; font-family: Arial, sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+  input[readonly] { background: #f3f4f6; color: #6b7280; border-color: #e5e7eb; cursor: not-allowed; border-radius: 30px; }
+
+  /* Validation Feedback */
+  input.touched:invalid, textarea.touched:invalid { border-color: #c0392b; background-color: #fff8f8; color: #c0392b; }
+
+  /* File Upload Preview Styles */
+  .file-input-wrapper { position: relative; }
+  .drop-zone { border: 2px dashed #d1d5db; padding: 2.5rem; text-align: center; cursor: pointer; transition: all 0.3s ease; position: relative; background: #fff; border-radius: 20px; }
+  .drop-zone--over { border-color: #c0392b; background: #fdf2f2; }
+  .drop-zone input { display: none; }
+  .drop-zone p { font-family: Arial, sans-serif; font-size: 0.85rem; color: #6b7280; margin: 0; }
+  .drop-zone.has-file p { display: none; }
+  
+  #pdfPreview { 
+    display: none; 
+    position: relative; 
+    width: 100%; 
+    max-width: 140px;
+    height: 180px; 
+    background: #f9fafb; 
+    border: 1px solid #e5e7eb;
+    margin: 0 auto;
+    border-radius: 4px; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center;
+    padding: 10px;
+    animation: grow 0.3s ease-out;
+  }
+  @keyframes grow { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+  .pdf-icon { font-size: 2.5rem; color: #c0392b; margin-bottom: 0.5rem; }
+  .file-name { font-family: Arial, sans-serif; font-size: 0.7rem; color: #4b5563; word-break: break-all; max-width: 100%; }
+  .remove-file-btn { 
+    position: absolute; 
+    top: -10px; 
+    left: -10px; 
+    width: 24px; 
+    height: 24px; 
+    background: #000; 
+    color: #fff; 
+    border: none; 
+    border-radius: 50%; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-weight: bold; 
+    font-size: 12px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  .submit-btn { width: 100%; padding: 1.25rem; background: #c0392b; color: #fff; border: none; font-family: Arial, sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
   .submit-btn:hover { background: #a93226; }
-  #toast { visibility: hidden; min-width: 250px; background: #0a0a0a; color: #fff; text-align: center; border-radius: 2px; padding: 16px; position: fixed; z-index: 10000; left: 50%; bottom: 30px; transform: translateX(-50%); font-family: Arial, sans-serif; font-size: 0.85rem; border: 1px solid #c0392b; }
-  #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-  @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-  @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-  footer { background: #0a0a0a; color: rgba(255,255,255,0.7); padding: 4rem 0 2rem; text-align: center; }
+  
+  /* Modernized Toast */
+  #toast { 
+    visibility: hidden; 
+    min-width: 320px; 
+    background: #fff; 
+    color: #111; 
+    text-align: left; 
+    border-radius: 12px; 
+    padding: 18px 24px; 
+    position: fixed; 
+    z-index: 10000; 
+    right: 30px; 
+    bottom: 30px; 
+    font-family: Arial, sans-serif; 
+    font-size: 0.9rem; 
+    border-left: 6px solid #c0392b; 
+    box-shadow: 0 15px 40px rgba(0,0,0,0.18); 
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    line-height: 1.4;
+  }
+  #toast.show { visibility: visible; animation: slideInRight 0.5s ease-out, fadeout 0.5s 2.5s forwards; }
+  @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  @keyframes fadeout { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(20px); visibility: hidden; } }
+
+  header.scrolled {
+    background: #fff;
+    border-bottom-color: #e5e7eb;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  header.scrolled .logo { color: #0a0a0a; }
+
+  #backToTop { position: fixed; bottom: 30px; right: 30px; z-index: 999; width: 40px; height: 40px; background: #000; color: #fff; border: none; border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s; font-size: 1.2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+  #backToTop.show { opacity: 1; visibility: visible; }
+  #backToTop:hover { background: #333; transform: translateY(-3px); }
+
+  /* Enhanced Footer Styles */
+  footer { background: #0a0a0a; color: rgba(255,255,255,0.7); padding: 4rem 0 2rem; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 5rem; }
+  .footer-inner { max-width: 1400px; margin: 0 auto; padding: 0 2rem; text-align: center; }
+  .footer-logo { font-family: Georgia, serif; font-size: 2rem; font-weight: 700; color: #c0392b; margin-bottom: 1.5rem; }
+  .footer-contact { font-family: Arial, sans-serif; font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 2rem; }
+  .footer-contact a { color: rgba(255,255,255,0.6); }
+  .footer-contact a:hover { color: #fff; }
+  .footer-bottom { max-width: 1400px; margin: 2rem auto 0; padding: 1.5rem 2rem 0; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .footer-bottom p { font-size: 0.72rem; font-family: Arial, sans-serif; color: rgba(255,255,255,0.3); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.72rem; font-family: Arial, sans-serif; color: rgba(255,255,255,0.3); }
+
+  @media(max-width:768px){ .footer-inner{grid-template-columns:1fr 1fr;} }
+  @media(max-width:480px){ .footer-inner{grid-template-columns:1fr; padding: 0 1.25rem;} .footer-bottom { flex-direction: column; text-align: center; } }
 </style>
 </head>
 <body>
-
-<header>
+<header id="site-header">
   <nav>
     <a href="index.html" class="logo">Lawrence&Partners</a>
     <img src="https://flagcdn.com/w2560/tr.png" alt="Turkey Flag" style="height: 20px; width: auto; display: block;">
@@ -56,15 +155,45 @@
     </div>
     <div class="form-group">
       <label>Upload CV (PDF only)</label>
-      <input type="file" name="resume" accept=".pdf" required>
+      <div class="file-input-wrapper drop-zone" id="dropZone" onclick="document.getElementById('resumeInput').click()">
+        <p>Drag & drop your PDF here or click to upload</p>
+        <input type="file" id="resumeInput" name="resume" accept=".pdf" required onchange="handleFileSelect(event)">
+        <div id="pdfPreview">
+          <button type="button" class="remove-file-btn" onclick="removeFile(event)">✕</button>
+          <div class="pdf-icon">📄</div>
+          <div class="file-name" id="fileName">filename.pdf</div>
+        </div>
+      </div>
     </div>
-    <button type="submit" class="submit-btn">Send PDF Application</button>
+    <button type="submit" class="submit-btn">APPLY</button>
   </form>
 </div>
 
 <footer>
-  <p>&copy; 2026 Lawrence&Partners. All rights reserved.</p>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Lawrence&Partners</div>
+      <div class="footer-contact">
+        Orjin Maslak, No:27 K:11<br>
+        Maslak 34485, Istanbul, Türkiye<br>
+        For general enquiries: <a href="mailto:Info@lawrenceconsultance.com">Info@lawrenceconsultance.com</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-links">
+      <a href="terms.html#privacy">Privacy Policy</a>
+      <a href="terms.html#cookies">Cookie Policy</a>
+      <a href="terms.html#terms">Terms of Use</a>
+    </div>
+  </div>
 </footer>
+
+<button id="backToTop" aria-label="Back to Top">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12.82 5.43c-.37-.54-1.26-.54-1.64 0l-7 10c-.21.31-.24.7-.07 1.04.17.33.51.54.89.54h14c.37 0 .71-.21.89-.54a1 1 0 0 0-.07-1.04zM6.92 15 12 7.74 17.08 15z"></path>
+  </svg>
+</button>
 
 <div id="toast">Submission Successful: Your application has been received.</div>
 
@@ -78,9 +207,83 @@
     document.getElementById('posInput').value = "General Application";
   }
 
+  // Drag and Drop Logic
+  const dropZone = document.getElementById('dropZone');
+  ['dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, e => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+  });
+  dropZone.addEventListener('dragover', () => dropZone.classList.add('drop-zone--over'));
+  ['dragleave', 'drop'].forEach(eventName => dropZone.addEventListener(eventName, () => dropZone.classList.remove('drop-zone--over')));
+  dropZone.addEventListener('drop', e => {
+    const files = e.dataTransfer.files;
+    if (files.length) {
+      const input = document.getElementById('resumeInput');
+      input.files = files;
+      handleFileSelect({ target: { files } });
+    }
+  });
+
+  function handleFileSelect(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('pdfPreview');
+    const fileNameDisplay = document.getElementById('fileName');
+    const zone = document.getElementById('dropZone');
+
+    if (file && file.type === "application/pdf") {
+      fileNameDisplay.textContent = file.name;
+      preview.style.display = 'flex';
+      zone.classList.add('has-file');
+    } else if (file) {
+      showToast("Please select a valid PDF file.");
+      event.target.value = "";
+    }
+  }
+
+  function removeFile(e) {
+    if (e) e.stopPropagation();
+    const fileInput = document.getElementById('resumeInput');
+    const preview = document.getElementById('pdfPreview');
+    const zone = document.getElementById('dropZone');
+    fileInput.value = "";
+    preview.style.display = 'none';
+    zone.classList.remove('has-file');
+  }
+
   async function handleApply(e) {
     e.preventDefault();
     const form = e.target;
+
+    // CV Upload Check
+    const resumeInput = document.getElementById('resumeInput');
+    if (!resumeInput.files || resumeInput.files.length === 0) {
+      showToast("Please upload your CV before submitting your application.");
+      return;
+    }
+
+    // Advanced Email Validation
+    const emailInput = form.querySelector('input[type="email"]');
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(emailInput.value)) {
+      showToast("Please provide a valid email address (e.g. example@gmail.com).");
+      emailInput.classList.add('touched');
+      return;
+    }
+
+    // Form Validation Check
+    if (!form.checkValidity()) {
+      const email = form.querySelector('input[type="email"]');
+      if (email.validity.typeMismatch) {
+        showToast("Invalid email address format.");
+      } else {
+        showToast("Please complete all required fields.");
+      }
+      form.querySelectorAll('input').forEach(i => i.classList.add('touched'));
+      return;
+    }
+
     const formData = new FormData(form);
     const btn = form.querySelector('button');
     
@@ -97,8 +300,10 @@
 
       if (response.ok) {
         showToast("Submission Successful: Your application has been received.");
-        form.reset();
-        setTimeout(() => { window.location.href = 'career.html'; }, 3000);
+        // Redirect back to career page after showing success message
+        setTimeout(() => { 
+          window.location.href = 'career.html'; 
+        }, 2500);
       } else {
         // Handle errors from Formspree
         const data = await response.json();
@@ -126,6 +331,27 @@
     t.className = "show";
     setTimeout(function(){ t.className = t.className.replace("show", ""); }, 3000);
   }
+
+  window.addEventListener('scroll', function() {
+    const header = document.getElementById('site-header');
+    const btn = document.getElementById('backToTop');
+
+    if (window.scrollY > 50) { // Adjust scroll threshold as needed
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+    if (window.scrollY > 300) { btn.classList.add('show'); }
+    else { btn.classList.remove('show'); }
+  });
+  document.getElementById('backToTop').addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Mark fields as touched on blur for visual feedback
+  document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('blur', () => input.classList.add('touched'));
+  });
 </script>
 
 </body>

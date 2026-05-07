@@ -10,13 +10,16 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Georgia, 'Times New Roman', serif; background: #fff; color: #111; line-height: 1.6; }
   a { text-decoration: none; color: inherit; }
+  a { text-decoration: none; color: inherit; outline: none; -webkit-tap-highlight-color: transparent; }
   
-  header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,10,10,0.97); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,10,10,0.97); border-bottom: 1px solid rgba(255,255,255,0.08); transition: all 0.3s; }
   nav { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 72px; }
   .logo { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
   .nav-links { display: flex; gap: 1.8rem; list-style: none; }
   .nav-links a { color: rgba(255,255,255,0.72); font-family: Arial, sans-serif; font-size: 0.8rem; transition: color 0.2s; padding-bottom: 2px; border-bottom: 2px solid transparent; }
   .nav-links a:hover { color: #fff; border-bottom-color: #c0392b; }
+  .nav-links a { color: rgba(255,255,255,0.72); font-family: Arial, sans-serif; font-size: 0.8rem; transition: color 0.2s; }
+  .nav-links a:hover { color: #fff; }
   .nav-right { display: flex; align-items: center; gap: 0.5rem; }
   .lang { font-family: Arial, sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.5); cursor: pointer; }
   .lang.active { color: #fff; font-weight: 600; }
@@ -24,6 +27,20 @@
   #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
   @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
   @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+  header.scrolled {
+    background: #fff;
+    border-bottom-color: #e5e7eb;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  header.scrolled .logo { color: #0a0a0a; }
+  header.scrolled .nav-links a { color: #4b5563; }
+  header.scrolled .nav-links a:hover, header.scrolled .nav-links a.active { color: #0a0a0a; border-bottom-color: #c0392b; }
+  header.scrolled .nav-links a:hover, header.scrolled .nav-links a.active { color: #0a0a0a; }
+  header.scrolled .lang { color: #6b7280; }
+  header.scrolled .lang.active { color: #0a0a0a; }
+  header.scrolled .hamburger span { background: #0a0a0a; }
+  header.scrolled .mobile-menu { background: #fff; border-top-color: #e5e7eb; }
+  header.scrolled .mobile-menu a { color: #4b5563; border-bottom-color: #f3f4f6; }
   .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: 0.5rem; }
   .hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: all 0.3s; }
   .mobile-menu { display: none; background: rgba(10,10,10,0.98); border-top: 1px solid rgba(255,255,255,0.08); padding: 1rem 2rem 1.5rem; }
@@ -38,15 +55,27 @@
 
   .legal-content { max-width: 900px; margin: 0 auto; padding: 5rem 2rem; }
   .legal-section { margin-bottom: 4rem; scroll-margin-top: 100px; }
-  .legal-section h2 { font-family: Georgia, serif; font-size: 1.8rem; font-weight: 400; color: #0a0a0a; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; }
-  .legal-section h3 { font-family: Arial, sans-serif; font-size: 0.9rem; font-weight: 700; color: #111; margin: 1.5rem 0 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .legal-section h2 { font-family: Georgia, serif; font-size: 2rem; font-weight: 400; color: #0a0a0a; margin-bottom: 2rem; padding-bottom: 0.75rem; border-bottom: 2px solid #c0392b; width: fit-content; padding-right: 3rem; }
+  .legal-section h3 { font-family: Arial, sans-serif; font-size: 0.95rem; font-weight: 700; color: #0a0a0a; margin: 2rem 0 1rem; text-transform: uppercase; letter-spacing: 0.06em; border-left: 3px solid #c0392b; padding-left: 1rem; }
   .legal-section p { font-family: Arial, sans-serif; font-size: 0.9rem; color: #4b5563; line-height: 1.8; margin-bottom: 1.5rem; }
-  .legal-section ul { list-style: none; margin-bottom: 2.5rem; }
-  .legal-section li { font-family: Arial, sans-serif; font-size: 0.9rem; color: #4b5563; line-height: 1.6; margin-bottom: 0.25rem; position: relative; padding: 1rem 1rem 1rem 2rem; border-bottom: 1px solid #f3f4f6; transition: all 0.3s ease; cursor: default; }
-  .legal-section li::before { content: '›'; position: absolute; left: 0.5rem; color: #c0392b; font-weight: bold; font-size: 1.2rem; line-height: 1; top: 0.9rem; }
-  .legal-section li:hover { background: #fcfcfc; padding-left: 2.5rem; border-bottom-color: #c0392b; color: #000; }
+
+  /* Accordion styling for Privacy Notices */
+  .notice-accordion { border-top: 1px solid #e5e7eb; margin-top: 2rem; }
+  .notice-item { border-bottom: 1px solid #e5e7eb; }
+  .notice-item summary { padding: 1.25rem 0; cursor: pointer; font-family: Arial, sans-serif; font-weight: 600; font-size: 0.9rem; color: #111; list-style: none; display: flex; justify-content: space-between; align-items: center; outline: none; }
+  .notice-item summary::-webkit-details-marker { display: none; }
+  .notice-item summary::after { content: '+'; color: #c0392b; font-size: 1.2rem; }
+  .notice-item[open] summary::after { content: '−'; }
+  .notice-body { padding: 0 0 1.5rem; font-family: Arial, sans-serif; font-size: 0.88rem; color: #4b5563; line-height: 1.7; }
+  .notice-body strong { color: #111; }
+
+  /* Standard list styling (for Cookie Management) */
+  .standard-list { list-style: none; margin: 1.5rem 0; padding: 0; }
+  .standard-list li { font-family: Arial, sans-serif; font-size: 0.9rem; color: #4b5563; line-height: 1.7; margin-bottom: 1rem; padding-left: 1.5rem; position: relative; }
+  .standard-list li::before { content: '•'; position: absolute; left: 0; color: #c0392b; font-weight: bold; top: 0; font-size: 1.2rem; line-height: 1.7; }
+
   footer { background: #0a0a0a; color: rgba(255,255,255,0.7); padding: 4rem 0 2rem; border-top: 1px solid rgba(255,255,255,0.06); }
-  .footer-inner { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+  .footer-inner { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; }
   .footer-logo { font-family: Georgia, serif; font-size: 2rem; font-weight: 700; color: #c0392b; margin-bottom: 1.5rem; }
   .footer-contact { font-family: Arial, sans-serif; font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 2rem; }
   .footer-col h4 { font-size: 0.7rem; font-family: Arial, sans-serif; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; }
@@ -67,11 +96,14 @@
     .page-hero-content, .legal-content { padding-left: 1.25rem; padding-right: 1.25rem; }
     .page-title { font-size: 1.8rem; } .legal-section h2 { font-size: 1.5rem; }
     .footer-inner{grid-template-columns:1fr; padding: 0 1.25rem;} }
+
+  #backToTop { position: fixed; bottom: 30px; right: 30px; z-index: 999; width: 40px; height: 40px; background: #000; color: #fff; border: none; border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s; font-size: 1.2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+  #backToTop.show { opacity: 1; visibility: visible; }
+  #backToTop:hover { background: #333; transform: translateY(-3px); }
 </style>
 </head>
 <body>
-
-<header>
+<header id="site-header">
   <nav>
     <a href="index.html" class="logo">Lawrence&Partners</a>
     <ul class="nav-links">
@@ -140,14 +172,44 @@
     <p>Our website is intended for use by adults and is not intended for children. LAWRENCE&PARTNERS does not knowingly collect information from children under the age of 18 (eighteen). If parents or legal guardians suspect that information belonging to children under their supervision has been sent to LAWRENCE&PARTNERS, they should contact us immediately at contact@lawrencepartners.com to request deletion of the information. In such cases, the information will be promptly deleted.</p>
 
     <h3>Specific Privacy Notices</h3>
-    <ul>
-      <li>Privacy Notice for Contact Form</li>
-      <li>Privacy Notice for Newsletter Subscription Form</li>
-      <li>Privacy Notice for Summer Intern Application Form</li>
-      <li>Privacy Notice for Legal Intern Application Form</li>
-      <li>Privacy Notice for Lawyer Application Form</li>
-      <li>Privacy Notice for Support Team Application Form</li>
-    </ul>
+    <div class="notice-accordion">
+      <details class="notice-item">
+        <summary>Privacy Notice for Contact Form</summary>
+        <div class="notice-body">
+          This notice explains how we process personal data collected through our contact form. <strong>Data Collected:</strong> Name, Surname, Company, Phone, Email Address, and the content of your Message. <strong>Purpose:</strong> To evaluate and respond to your inquiries, requests, or feedback. <strong>Legal Basis:</strong> Processing is based on the legitimate interests of Lawrence&Partners in maintaining professional communication with site visitors.
+        </div>
+      </details>
+      <details class="notice-item">
+        <summary>Privacy Notice for Newsletter Subscription Form</summary>
+        <div class="notice-body">
+          <strong>Data Collected:</strong> Email Address. <strong>Purpose:</strong> To provide you with information regarding legal developments, publications, and events organized by Lawrence&Partners. <strong>Legal Basis:</strong> Your explicit consent, which can be withdrawn at any time by clicking the "unsubscribe" link in our emails.
+        </div>
+      </details>
+      <details class="notice-item">
+        <summary>Privacy Notice for Summer Intern Application Form</summary>
+        <div class="notice-body">
+          <strong>Data Collected:</strong> Identity information, contact details, educational background, and CV. <strong>Purpose:</strong> To manage the recruitment and evaluation process for our summer internship program. <strong>Legal Basis:</strong> Necessary for the performance of recruitment steps at the request of the data subject.
+        </div>
+      </details>
+      <details class="notice-item">
+        <summary>Privacy Notice for Legal Intern Application Form</summary>
+        <div class="notice-body">
+          <strong>Data Collected:</strong> Full name, contact information, academic transcripts, and professional experience. <strong>Purpose:</strong> Selection and placement of legal interns following the completion of their law degree. <strong>Legal Basis:</strong> Fulfilment of legal obligations and legitimate interests in maintaining high professional standards.
+        </div>
+      </details>
+      <details class="notice-item">
+        <summary>Privacy Notice for Lawyer Application Form</summary>
+        <div class="notice-body">
+          <strong>Data Collected:</strong> Professional credentials, identity data, contact info, and employment history. <strong>Purpose:</strong> To assess the suitability of candidates for associate and senior legal positions within the firm. <strong>Legal Basis:</strong> Legitimate interest in recruiting qualified legal professionals.
+        </div>
+      </details>
+      <details class="notice-item">
+        <summary>Privacy Notice for Support Team Application Form</summary>
+        <div class="notice-body">
+          <strong>Data Collected:</strong> Name, contact details, work history, and references. <strong>Purpose:</strong> To process applications for administrative, financial, and technical support roles. <strong>Legal Basis:</strong> Legitimate interest in the operational efficiency of the firm.
+        </div>
+      </details>
+    </div>
   </section>
 
   <section class="legal-section" id="cookies">
@@ -161,7 +223,7 @@
 
     <h3>Cookie management</h3>
     <p>Depending on the type of your internet browser, you can learn about cookies and use your right to allow or reject them by following the steps below:</p>
-    <ul>
+    <ul class="standard-list">
       <li><strong>Google Chrome:</strong> You can allow or block cookies from the “Cookie” tab by clicking the “lock sign” or the letter “I” in the “address section” of your browser.</li>
       <li><strong>Internet Explorer:</strong> Click on the “Security” tab from the “Tool” or “Tools” section in the upper right corner of your browser and perform our cookie management as “allow” or “do not allow”.</li>
       <li><strong>Mozilla Firefox:</strong> Click the “Open menu” tab in the upper right corner of your browser. Click on the “Options” image and use the “Privacy and Security” button to manage your cookies.</li>
@@ -179,8 +241,8 @@
       <div class="footer-logo">Lawrence&Partners</div>
       <div class="footer-contact">
         Orjin Maslak, No:27 K:11<br>
-        Maslak 34485, Istanbul, Türkiye<br>
-        T: +90 850 540 4079
+        Maslak 34485, Istanbul, Türkiye<br><br>
+        For enquiries: <a href="mailto:Info@lawrenceconsultance.com">Info@lawrenceconsultance.com</a>
       </div>
     </div>
     <div class="footer-col">
@@ -188,30 +250,19 @@
       <ul>
         <li><a href="about.html">› About Us</a></li>
         <li><a href="practices.html">› Our Practices</a></li>
+        <li><a href="about.html#awards">› Awards</a></li>
         <li><a href="team.html">› Team</a></li>
-        <li><a href="news.html">› News</a></li>
-        <li><a href="publications.html">› Publications</a></li>
-        <li><a href="events.html">› Events</a></li>
         <li><a href="career.html">› Career</a></li>
         <li><a href="contact.html">› Contact</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Legal</h4>
+      <h4>News &amp; Publications</h4>
       <ul>
-        <li><a href="terms.html#terms">› Terms of Use</a></li>
-        <li><a href="terms.html#privacy">› Privacy Notice</a></li>
-        <li><a href="terms.html#cookies">› Cookie Policy</a></li>
+        <li><a href="news.html">› News</a></li>
+        <li><a href="publications.html">› Publications</a></li>
+        <li><a href="events.html">› Events</a></li>
       </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Follow Us</h4>
-      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-        <a href="https://linkedin.com" target="_blank" rel="noopener" class="footer-linkedin">in</a>
-        <a href="https://x.com" target="_blank" rel="noopener" class="footer-linkedin">X</a>
-        <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-linkedin">ig</a>
-        <a href="https://facebook.com" target="_blank" rel="noopener" class="footer-linkedin">fb</a>
-      </div>
     </div>
   </div>
   <div class="footer-bottom">
@@ -223,6 +274,12 @@
     </div>
   </div>
 </footer>
+
+<button id="backToTop" aria-label="Back to Top">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12.82 5.43c-.37-.54-1.26-.54-1.64 0l-7 10c-.21.31-.24.7-.07 1.04.17.33.51.54.89.54h14c.37 0 .71-.21.89-.54a1 1 0 0 0-.07-1.04zM6.92 15 12 7.74 17.08 15z"></path>
+  </svg>
+</button>
 
 <div id="toast">Thank you! Your subscription request has been sent.</div>
 
@@ -325,6 +382,22 @@
   } else {
     document.getElementById("cookieBanner").style.display = "block";
   }
+
+  window.addEventListener('scroll', function() {
+    const header = document.getElementById('site-header');
+    const btn = document.getElementById('backToTop');
+
+    if (window.scrollY > 50) { // Adjust scroll threshold as needed
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+    if (window.scrollY > 400) { btn.classList.add('show'); }
+    else { btn.classList.remove('show'); }
+  });
+  document.getElementById('backToTop').addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 </script>
 </body>
 </html>
